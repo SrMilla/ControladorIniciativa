@@ -30,7 +30,7 @@ def imprimirlista(lista_personajes):
         if i.tipo==0 :
             print(i.name,"\t\tPV",i.vida)
         else:
-            print(i.name,"\t\tDaño acumulado:",i.dañoacumulado)           
+            print(i.name,"\t\tDaño acumulado:",i.danoacumulado)           
 def atacar(lista):
     n=0
     print("¿A quien atacas?")
@@ -84,7 +84,7 @@ def Guardar(lista_personajes):
         inicias.append(i.iniciativa)
         if i.tipo == 1:
             tipos.append(1)
-            pain.append(i.dañoacumulado)
+            pain.append(i.danoacumulado)
         else:
             tipos.append(0)
             pain.append(i.vida)
@@ -95,6 +95,7 @@ def Guardar(lista_personajes):
     df = pd.DataFrame(data,columns =['Name','Iniciativa','tipo','PS'])
     df.to_csv('Partida.csv')
 def Cargar():
+    c.lista_personajes=[]
     df=pd.read_csv('Partida.csv')
     names = df['Name']
     inicias = df['Iniciativa']
@@ -105,7 +106,7 @@ def Cargar():
             p1=c.aliado(inicias[i],names[i],ps[i])
         else:
             p2=c.enemigo(inicias[i],names[i])
-            p2.dañoacumulado=ps[i]
+            p2.danoacumulado=ps[i]
 def menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos):
     
     imprimirlista(lista_personajes)
@@ -144,5 +145,4 @@ def menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos):
     if a ==7:
         Cargar()
         return menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)
-
 

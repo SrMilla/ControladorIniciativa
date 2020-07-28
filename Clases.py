@@ -13,7 +13,7 @@ import Funciones as f
 # puntosdevida
 # iniciativa
 # name
-# dañoacumulado
+# danoacumulado
 lista=[]
 lista_de_iniciativa=[]
 lista_personajes=[]
@@ -32,18 +32,18 @@ class personaje:
         self.iniciativa=l
 class enemigo(personaje):
     def __init__(self,iniciativa,name):
-        self.dañoacumulado=0
+        self.danoacumulado=0
         self.tipo=1
         personaje.__init__(self,iniciativa,name)
         lista_enemigos.append(self)
         msg=('Se ha añadido a {0} con {1} de iniciativa')
         print(msg.format(self.name,self.iniciativa))
     def añadirdaño(self,daño):
-        self.dañoacumulado+=daño
+        self.danoacumulado+=daño
     def curar(self,ps):
         self.añadirdaño(-ps)
-        if self.dañoacumulado<0:
-            self.dañoacumulado=0
+        if self.danoacumulado<0:
+            self.danoacumulado=0
 class aliado(personaje):
     def __init__(self,iniciativa,name,vida):
         self.tipo=0
