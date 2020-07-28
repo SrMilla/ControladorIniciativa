@@ -107,6 +107,7 @@ def Cargar():
             p2=c.enemigo(inicias[i],names[i])
             p2.dañoacumulado=ps[i]
 def menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos):
+    
     imprimirlista(lista_personajes)
     print("¿Que quieres hacer?")
     print("1.Atacar")
@@ -143,3 +144,5 @@ def menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos):
     if a ==7:
         Cargar()
         return menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)
+
+
