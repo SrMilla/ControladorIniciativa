@@ -38,10 +38,10 @@ class enemigo(personaje):
         lista_enemigos.append(self)
         msg=('Se ha anadido a {0} con {1} de iniciativa')
         print(msg.format(self.name,self.iniciativa))
-    def anadirdano(self,dano):
-        self.danoacumulado+=dano
+    def atacar(self,ps):
+        self.danoacumulado+=ps
     def curar(self,ps):
-        self.anadirdano(-ps)
+        self.atacar(-ps)
         if self.danoacumulado<0:
             self.danoacumulado=0
 class aliado(personaje):

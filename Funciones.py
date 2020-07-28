@@ -31,7 +31,7 @@ def imprimirlista(lista_personajes):
             print(i.name,"\t\tPV",i.vida)
         else:
             print(i.name,"\t\tDano acumulado:",i.danoacumulado)           
-def atacar(lista):
+def atacar(lista,n):
     n=0
     print("¿A quien atacas?")
     for i in lista:
@@ -122,9 +122,9 @@ def menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos):
     a=int((input()))
     if a==0:
         return True
-    if a==1:
-        atacar(lista_personajes)
-        return menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)
+    # if a==1:
+    #     atacar(lista_personajes)
+    #     return menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)
     if a==2:
         anadir_aliado()
         ciclo(lista_personajes,lista_de_iniciativa)
