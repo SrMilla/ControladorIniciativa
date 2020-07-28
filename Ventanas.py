@@ -87,7 +87,6 @@ class vp ():
                 t=i.name+'\t PS:'+str(i.vida)
                 self.listbox_personajes.insert(END,t)
                 self.listbox_personajes.itemconfigure(n,bg="#00aa00", fg="#fff")
-                
             else:
                 self.listbox_personajes.insert(END,p)
                 self.listbox_personajes.itemconfigure(n,bg="#ff0000", fg="#fff")

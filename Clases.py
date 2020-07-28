@@ -36,12 +36,12 @@ class enemigo(personaje):
         self.tipo=1
         personaje.__init__(self,iniciativa,name)
         lista_enemigos.append(self)
-        msg=('Se ha añadido a {0} con {1} de iniciativa')
+        msg=('Se ha anadido a {0} con {1} de iniciativa')
         print(msg.format(self.name,self.iniciativa))
-    def añadirdaño(self,daño):
-        self.danoacumulado+=daño
+    def anadirdano(self,dano):
+        self.danoacumulado+=dano
     def curar(self,ps):
-        self.añadirdaño(-ps)
+        self.anadirdano(-ps)
         if self.danoacumulado<0:
             self.danoacumulado=0
 class aliado(personaje):
@@ -50,7 +50,7 @@ class aliado(personaje):
         self.vida=vida
         personaje.__init__(self,iniciativa,name)
         lista_aliados.append(self)
-        msg=('Se ha añadido a {0} con {1} de iniciativa y {2}')
+        msg=('Se ha anadido a {0} con {1} de iniciativa y {2}')
         print(msg.format(self.name,self.iniciativa,self.vida))
     def atacar(self,ps):
         self.vida=self.vida-ps

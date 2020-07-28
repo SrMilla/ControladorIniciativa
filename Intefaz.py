@@ -17,40 +17,40 @@ def clicked():
 
     lbl.configure(text= res)
 
-# btn = Button(añadir, text="Click Me", command=clicked)
+# btn = Button(anadir, text="Click Me", command=clicked)
 
 # btn.grid(column=4, row=4)
 personaje_nuevo=[]
 df=pd.DataFrame(columns=('Name','Iniciativa','PS'))
 dic= {}
-def ventana_de_añadir(df):
+def ventana_de_anadir(df):
     r=False
-    añadir = Tk()
+    anadir = Tk()
 
-    añadir.title("Añadir enemigo aliado")
+    anadir.title("Anadir enemigo aliado")
 
-    añadir.geometry('720x600')
-    campos=["Name","Iniciativa","Ps/Daño recibido","Aliado/enemigo"]
+    anadir.geometry('720x600')
+    campos=["Name","Iniciativa","Ps/Dano recibido","Aliado/enemigo"]
     
     n=0
     for i in range(4):    
-        lbl = Label(añadir, text=campos[i])
+        lbl = Label(anadir, text=campos[i])
     
-        espacio = Label(añadir,text="  ")
+        espacio = Label(anadir,text="  ")
         lbl.grid(column=20,row=i)
     #BOTONES
-    name= Entry(añadir,width=10)
+    name= Entry(anadir,width=10)
     name.grid(column=21,row=0)
     
-    pain=Spinbox(añadir,from_=0,to=999,width=5)
+    pain=Spinbox(anadir,from_=0,to=999,width=5)
     pain.grid(column=21,row=2)
     
-    ini=Spinbox(añadir,from_=0,to=40,width=5)
+    ini=Spinbox(anadir,from_=0,to=40,width=5)
     ini.grid(column=21,row=1)
     
     aliade_estado=BooleanVar()
     aliade_estado.set(True)
-    aliade =Checkbutton(añadir,var=aliade_estado)
+    aliade =Checkbutton(anadir,var=aliade_estado)
     aliade.grid(column=21,row=3)
     
     
@@ -65,11 +65,11 @@ def ventana_de_añadir(df):
         
         r=True
     def Cerrar():
-        añadir.destroy()
+        anadir.destroy()
         
-    btn_guardar = Button(añadir,text='Guardar',command=clicked)
+    btn_guardar = Button(anadir,text='Guardar',command=clicked)
     btn_guardar.grid(column=10,row=10)
-    btn_cerrar =Button(añadir, text='Cerrar', command=Cerrar)
+    btn_cerrar =Button(anadir, text='Cerrar', command=Cerrar)
     btn_cerrar.grid(column=11,row=10 )
     
     
@@ -77,11 +77,11 @@ def ventana_de_añadir(df):
         
         print(personaje_nuevo)
 
-    añadir.mainloop() 
+    anadir.mainloop() 
     
 
 
-ventana_de_añadir(df)
+ventana_de_anadir(df)
 print(df)
 c.Cargar()
 c.lista_personajes

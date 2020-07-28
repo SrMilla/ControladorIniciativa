@@ -7,7 +7,7 @@ def pasar_turno(lista):
     for i in range(k-1):
         lista[i]=lista[i+1]
     lista[k-1]=aux
-def Seleccion(lin,n,lid):                             #Se le pasa un vector y su tamaño
+def Seleccion(lin,n,lid):                             #Se le pasa un vector y su tamano
     for i in range(0,n-1):                      #Se recorre el vector desde la primera posicion a la ultima
         min=i                                   #Se toma como minimo el elemento en la posicion i  
         for j in range(i+1,n):                  #Se inicia un segundo recorrido saltandose la primera posicion
@@ -30,7 +30,7 @@ def imprimirlista(lista_personajes):
         if i.tipo==0 :
             print(i.name,"\t\tPV",i.vida)
         else:
-            print(i.name,"\t\tDaño acumulado:",i.danoacumulado)           
+            print(i.name,"\t\tDano acumulado:",i.danoacumulado)           
 def atacar(lista):
     n=0
     print("¿A quien atacas?")
@@ -41,12 +41,12 @@ def atacar(lista):
    
     print("Atacas a",lista[victima].name)
     print("¿Cuanta vida le quitas?")
-    daño=int(input())
+    dano=int(input())
     if lista[victima].tipo==0:
-        lista[victima].atacar(daño)
+        lista[victima].atacar(dano)
     else:
-        lista[victima].añadirdaño(daño)
-def añadir_aliado():
+        lista[victima].anadirdano(dano)
+def anadir_aliado():
     print("Nombre del aliado:")
     name=input()
     print("Cuanta iniciativa:")
@@ -54,7 +54,7 @@ def añadir_aliado():
     print("Cuanta vida maxima")
     vida=int(input())
     pn=c.aliado(iniciativa,name,vida)
-def añadir_enemigo():
+def anadir_enemigo():
     print("Nombre:")
     name=input()
     print("Iniciativa:")
@@ -112,8 +112,8 @@ def menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos):
     imprimirlista(lista_personajes)
     print("¿Que quieres hacer?")
     print("1.Atacar")
-    print("2.Añadir aliado")
-    print("3.Añadir enemigo")
+    print("2.Anadir aliado")
+    print("3.Anadir enemigo")
     print("4.Quitar aliado")
     print("5.Pasar turno")
     print("6.Guardar")
@@ -126,11 +126,11 @@ def menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos):
         atacar(lista_personajes)
         return menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)
     if a==2:
-        añadir_aliado()
+        anadir_aliado()
         ciclo(lista_personajes,lista_de_iniciativa)
         return menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)
     if a==3:
-        añadir_enemigo()
+        anadir_enemigo()
         ciclo(lista_personajes,lista_de_iniciativa)
         return menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)
     if a==4:
