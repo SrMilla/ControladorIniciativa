@@ -21,7 +21,7 @@ class vp ():
         self.pp.title("Controlador de iniciativa")
         self.primerjugador_name=tk.StringVar()
         self.primerjugador_name.set("")
-        
+        self.listan=[]
         
         
         
@@ -83,8 +83,8 @@ class vp ():
         self.listbox_personajes = Listbox(self.pp, yscrollcommand = scrollbar_personaje.set )  
         self.listbox_personajes.grid(column=1, row=1)
         scrollbar_personaje.config(command=self.listbox_personajes.yview)
-        
-        
+        print(self.listan)
+        self.nuevodispo()
 
         self.pp.mainloop()
 
@@ -120,6 +120,8 @@ class vp ():
         p=self.lista_personaje[w]
         self.lista_personaje.remove(p)
         self.actualizar()
+        print(self.listan)
+
     def curar(self):
         w=self.listbox_personajes.curselection()
         w=w[0]
@@ -135,8 +137,24 @@ class vp ():
     def Guardar(self):
         f.Guardar(self.lista_personaje)
     def NuevoPersonaje(self):
-        t=vNP()
-        print(listan[0])
+        self.NuevoPersonajeP1()
+        self.NuevoPersonajeP2()
+    def NuevoPersonajeP1(self):
+        self.listan=[]
+        print(self.listan)
+
+        t=vNP(self.pp,self.listan)
+        # self.pp.wait_window(t.pantalla)
+       
+    def nuevodispo(self):
+        if self.listan:
+            
+            print(self.listan)
+            p=c.enemigo(self.listan[0],self.listan[1])
+            self.lista_personaje.append(p)
+            self.actualizar()
+            print("aña")
+            self.listan=[]
         
         #PONER LO DE: ESTAS SEGURO DE ELIMINAR A *****
         
@@ -155,10 +173,17 @@ class vp ():
         
         
         self.pp.mainloop()
-class vNP():
-    def __init__(self):
+class vNP:
+    def __init__(self,padre,lista):
+        self.lista=lista
         
-        self.pantalla = Tk()
+        
+        
+        self.pantalla = Toplevel(padre)
+        self.pantalla.transient(padre)
+        self.pantalla.grab_set()
+        self.pantalla.bind("<Return>", self.Guardar)
+        
         self.pantalla.title("Nuevo personaje")
         self.pantalla.geometry('350x200')
         
@@ -170,19 +195,32 @@ class vNP():
         
         self.botonGuardar=Button(self.pantalla,text="Guardar",command=self.Guardar)
         self.botonGuardar.grid(column=0, row=2)
+        self.botonGuardar.bind("<Return>", self.Guardar)
+        # self.botonGuardar.bind("<Escape>", self.cancel)
+
+        # self.nombre="pepe"
         
         
         
         
         self.pantalla.mainloop()
         
-    def Guardar(self):
+    def Guardar(self,event=None):
         self.iniciativa=int(self.spinIniciativa.get())
         self.nombre=self.entryNombre.get()
-        listan.append(self.nombre)
+        self.lista.append(4)
+        self.lista.append("juan")
+        
+        # self.lista.set(self.lista)
         self.pantalla.destroy()
 
-        
+# class dialogo(tk.toplevel):
+#     def __init__(self,padre,hijo):
+#         self.padre=padre
+#         self.hijo=hijo
+#     def ok(self):
+#         self.hijo.nombre
+                
 t=vp(lista_personaje)
 # vNP()
 # p.Cargar()
