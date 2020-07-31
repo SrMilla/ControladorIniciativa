@@ -10,6 +10,7 @@ from tkinter import *
 from tkinter import ttk
 import tkinter as tk
 listan=[]
+from PIL import ImageTk, Image
 # from Clases import lista_personaje
 import Funciones as f
 import Clases as c
@@ -25,11 +26,29 @@ class vp ():
         self.primerjugador_name=tk.StringVar()
         self.primerjugador_name.set("")
         self.listan=[]
+        ancho="620"
+        largo="560"
+        pant=ancho+"x"+largo
+        ia=int(ancho)
+        il=int(largo)
+        self.fuente= "BookAntiqua 11"
+        self.pp.geometry(pant)
+        
+        self.lta= Label(self.pp,text="El turno es de:",font = self.fuente)
+        # self.lta.grid(column=0,row=0)
+        self.lta.place(x=60,y=60)
+        
+        self.lap=Label(self.pp,text="Primer personaje",font = self.fuente)
+        self.lap.place(x=180,y=60)
         
         
+        self.lta2= Label(self.pp,text="Con vida:",font = self.fuente)
+        self.lta2.place(x=60,y=80)
+        self.lap2=Label(self.pp,text="Vida del primer personaje",font = self.fuente)
+        self.lap2.place(x=180,y=80)
+        # self.lta2.grid(column=0,row=2)
         
-        self.lta= Label(self.pp,text="El turno es de\tCon vida")
-        self.lta.grid(column=1,row=0)
+        # self.lta2 = Label
         # NO NECESARIO YA QUE ESTA EN EL MENU
         # self.botonCargar= ttk.Button(self.pp,text="Cargar",command=self.Cargar)
         # self.botonCargar.grid(column=9,row=2)
@@ -38,28 +57,37 @@ class vp ():
         # self.botonVaciar.grid(column=9,row=3)
         
         self.botonPasarturno = ttk.Button(self.pp,text="Siguiente turno",command=self.PasarTurno)
-        self.botonPasarturno.grid(column=9,row=1)
-        
-        self.botonPasarturno = ttk.Button(self.pp,text="Eliminar personaje",command=self.eliminar)
-        self.botonPasarturno.grid(column=9,row=2)
-       
-        self.botonCurar = ttk.Button(self.pp,text="Curar",command=self.curar)
-        self.botonCurar.grid(column=9, row=3)
-        
-        self.botonPain = ttk.Button(self.pp,text="Pain",command=self.danar)
-        self.botonPain.grid(column=9, row=4)
-        
-        self.botonAnadirpersonaje = ttk.Button(self.pp,text="Nuevo personaje",command=self.NuevoPersonaje)
-        self.botonAnadirpersonaje.grid(column=9,row=5)
-        
-        
+        # self.botonPasarturno.grid(column=0,row=1)
+        self.botonPasarturno.place(x=400,y=160)
+        # self.botonPasarturno.grid(column=9,row=2)
+        # self.botonEliminarPersonaje.place(x=400,y=200)
         self.spinPs = ttk.Spinbox(self.pp, from_=0,to=99)
-        self.spinPs.grid(column=9, row=6)
+        self.spinPs.place(x=400,y=200)
+        self.botonCurar = ttk.Button(self.pp,text="Curar",command=self.curar)
+        # self.botonCurar.grid(column=9, row=3)
+        self.botonCurar.place(x=400,y=240)
+        self.botonPain = ttk.Button(self.pp,text="Pain",command=self.danar)
+        self.botonPain.place(x=400,y=280)
+        # self.botonPain.grid(column=9, row=4)
+        self.botonEliminarPersonaje = ttk.Button(self.pp,text="Eliminar personaje",command=self.eliminar)
+        self.botonEliminarPersonaje.place(x=400,y=320)
+        self.botonAnadirpersonaje = ttk.Button(self.pp,text="Nuevo personaje",command=self.NuevoPersonaje)
+        # self.botonAnadirpersonaje.grid(column=9,row=5)
+        
+        
+        
+        # self.spinPs.grid(column=9, row=6)
         #
+        load = Image.open("aliado.jpg")
+        render = ImageTk.PhotoImage(load)
+        img = Label(self.pp, image=render)
+        img.image = render
+        img.place(x=400,y=20)
+        # img.grid(column=9, row=7)
         
         
         self.personaje = Label(self.pp,textvariable=self.primerjugador_name)
-        self.personaje.grid(column=1,row=1)
+        # self.personaje.grid(column=1,row=1)
         
         
         
@@ -83,10 +111,10 @@ class vp ():
         scrollbar_personaje = Scrollbar(self.pp)  
         # scrollbar_personaje.pack(side = RIGHT, fill = Y)  
         
-        self.listbox_personajes = Listbox(self.pp, yscrollcommand = scrollbar_personaje.set )  
-        self.listbox_personajes.grid(column=1, row=1)
+        self.listbox_personajes = Listbox(self.pp, yscrollcommand = scrollbar_personaje.set,width=35,height=10,font = self.fuente)  
+        # self.listbox_personajes.grid(column=1, row=1)
         scrollbar_personaje.config(command=self.listbox_personajes.yview)
-        print(self.listan)
+        self.listbox_personajes.place(x=60,y=150)
         # self.nuevodispo()
 
         self.pp.mainloop()
@@ -99,11 +127,9 @@ class vp ():
         lista_personaje = []
         f.Cargar()
         lista_personaje=c.lista_personajes.copy()
-        print(lista_personaje[0])
         self.actualizar()
     def PasarTurno(self):
         global lista_personaje
-        print("pp",lista_personaje[0])
 
         
         f.pasar_turno(lista_personaje)#se carga
@@ -114,18 +140,28 @@ class vp ():
         n=0
         print("pp",lista_personaje[0])
         for i in lista_personaje:
-            p=str(i.name)
-            print(p)
-            # p+=t
             if(i.tipo==0):
                 t=i.name+'     PS:'+str(i.vida)
                 self.listbox_personajes.insert(END,t)
                 self.listbox_personajes.itemconfigure(n,bg="#00aa00", fg="#fff")
+
             else:
                 t=i.name+'     DR:'+str(i.danoacumulado)
                 self.listbox_personajes.insert(END,t)
                 self.listbox_personajes.itemconfigure(n,bg="#ff0000", fg="#fff")
+                # self.lap2.configure(text=lista_personaje[0].danoacumulado)
+            if lista_personaje[0].tipo==0:
+                self.lap2.configure(text=lista_personaje[0].vida)
+                self.lta2.configure(text="Con vida:")
+            else:
+                self.lap2.configure(text=lista_personaje[0].danoacumulado)
+                self.lta2.configure(text="Con un daño de:")
+
+
+
             n+=1
+        self.lap.configure(text=lista_personaje[0].name)
+
     def eliminar(self):
         global lista_personaje
         w=self.listbox_personajes.curselection()
@@ -133,7 +169,6 @@ class vp ():
         p=lista_personaje[w]
         lista_personaje.remove(p)
         self.actualizar()
-        print(self.listan)
 
     def curar(self):
         global lista_personaje
