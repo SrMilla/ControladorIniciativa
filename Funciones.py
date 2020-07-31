@@ -105,8 +105,8 @@ def Cargar():
         if tipo[i] == 0:#aliado
             p1=c.aliado(inicias[i],names[i],ps[i])
         else:
-            p2=c.enemigo(inicias[i],names[i])
-            p2.danoacumulado=ps[i]
+            p2=c.enemigo(inicias[i],names[i],ps[i])
+            # p2.danoacumulado=ps[i]
 def menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos):
     
     imprimirlista(lista_personajes)

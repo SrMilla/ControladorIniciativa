@@ -156,7 +156,7 @@ class vp ():
     def NuevoPersonaje(self):
         self.listan=[]
         print(self.listan)
-        t=vNP(self.pp)
+        t=vNP(self)
         self.pp.wait_window(t.pantalla)
         
         # print(self.listan)
@@ -176,10 +176,10 @@ class vp ():
 class vNP:
     def __init__(self,padre):
         # self.lista=lista.copy()
-       
-        
-        self.pantalla = Toplevel(padre)
-        self.pantalla.transient(padre)
+        self.padre = padre
+        self.tipo=BooleanVar()
+        self.pantalla = Toplevel(padre.pp)
+        self.pantalla.transient(padre.pp)
         self.pantalla.grab_set()
         self.pantalla.bind("<Return>", self.Guardar)
         
@@ -187,14 +187,35 @@ class vNP:
         self.pantalla.geometry('350x200')
         
         self.entryNombre=Entry(self.pantalla,width=10)
-        self.entryNombre.grid(column=0, row=0)
+        self.entryNombre.grid(column=1, row=0)
         
+        self.lNombre=Label(self.pantalla,text="Nombre")
+        self.lNombre.grid(column=0, row=0)
+
         self.spinIniciativa=ttk.Spinbox(self.pantalla,width=10,from_=0,to=99)
-        self.spinIniciativa.grid(column=0,row=1)
+        self.spinIniciativa.grid(column=1,row=1)
         
-        self.botonGuardar=Button(self.pantalla,text="Guardar",command=self.Guardar)
-        self.botonGuardar.grid(column=0, row=2)
+        self.lIniciativa=Label(self.pantalla,text="Iniciativa:")
+        self.lIniciativa.grid(column=0, row=1)
+
+        self.spinPS=ttk.Spinbox(self.pantalla,width=10,from_=0,to=99)
+        self.spinPS.grid(column=1,row=2)
+        self.lPS=Label(self.pantalla,text="PS/Daño recibido:")
+        self.lPS.grid(column=0, row=2)
+        
+       
+        
+        self.chekTipoAliado=ttk.Radiobutton(self.pantalla,text="Aliado",value=True,variable=self.tipo)
+        self.chekTipoAliado.grid(column=1, row=3)
+        
+        self.chekTipoEnemigo=ttk.Radiobutton(self.pantalla,text="Enemigo",value=False,variable=self.tipo)
+        self.chekTipoEnemigo.grid(column=0, row=3)
+        
+        self.botonGuardar=ttk.Button(self.pantalla,text="Guardar",command=self.Guardar)
+        self.botonGuardar.grid(column=0, row=4)
         self.botonGuardar.bind("<Return>", self.Guardar)
+        
+        
      
         
         
@@ -204,14 +225,23 @@ class vNP:
         
     def Guardar(self,event=None):
         global lista_personaje
-        self.iniciativa=int(self.spinIniciativa.get())
+        print("El enemigo es tipo:",self.tipo.get())
         self.nombre=self.entryNombre.get()
-        p=c.enemigo(4,"pepe")
-        lista_personaje.append(p)
+        self.iniciativa=int(self.spinIniciativa.get())
+        self.ps=int(self.spinPS.get())
         
+        # print("El personaje es:",self.nombre,"con Ps:",self.ps,"y es tipo",self.tipoE)
+        if self.tipo.get():
+            #es aliado
+            print("Es bueno")
+            p=c.aliado(self.iniciativa,self.entryNombre.get(),self.ps)
+        else:
+            p=c.enemigo(self.iniciativa,self.entryNombre.get(),self.ps)
+        lista_personaje.append(p)
+        #Actualizamos la lista
+        self.padre.actualizar()
         self.pantalla.destroy()
-
-
+    
                 
 t=vp(lista_personaje)
 # vNP()

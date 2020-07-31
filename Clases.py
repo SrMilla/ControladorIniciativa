@@ -38,6 +38,15 @@ class enemigo(personaje):
         lista_enemigos.append(self)
         msg=('Se ha anadido a {0} con {1} de iniciativa')
         print(msg.format(self.name,self.iniciativa))
+    def __init__(self,iniciativa,name,ps):
+        # self.danoacumulado=0
+        self.tipo=1
+        self.danoacumulado=ps
+        personaje.__init__(self,iniciativa,name)
+        lista_enemigos.append(self)
+        msg=('Se ha anadido a {0} con {1} de iniciativa')
+        print(msg.format(self.name,self.iniciativa))
+    
     def atacar(self,ps):
         self.danoacumulado+=ps
     def curar(self,ps):
