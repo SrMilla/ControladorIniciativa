@@ -15,9 +15,12 @@ import Funciones as f
 import Clases as c
 lista_personaje=[]
 class vp ():
+    
     def __init__(self,lista_personaje):
+        
+        # Frame.__init__(self, master=None)
         self.pp = Tk()
-        self.lista_personaje=lista_personaje
+        # self.lista_personaje=lista_personaje
         self.pp.title("Controlador de iniciativa")
         self.primerjugador_name=tk.StringVar()
         self.primerjugador_name.set("")
@@ -84,7 +87,7 @@ class vp ():
         self.listbox_personajes.grid(column=1, row=1)
         scrollbar_personaje.config(command=self.listbox_personajes.yview)
         print(self.listan)
-        self.nuevodispo()
+        # self.nuevodispo()
 
         self.pp.mainloop()
 
@@ -92,18 +95,27 @@ class vp ():
         self.listbox_personajes.delete(0,END)
         
     def Cargar(self):
-        self.lista_personaje = []
+        global lista_personaje
+        lista_personaje = []
         f.Cargar()
-        self.lista_personaje=c.lista_personajes.copy()
+        lista_personaje=c.lista_personajes.copy()
+        print(lista_personaje[0])
         self.actualizar()
     def PasarTurno(self):
-        f.pasar_turno(self.lista_personaje)#se carga
+        global lista_personaje
+        print("pp",lista_personaje[0])
+
+        
+        f.pasar_turno(lista_personaje)#se carga
         self.actualizar()
     def actualizar(self):
+        global lista_personaje
         self.listbox_personajes.delete(0,END)#se vacia
         n=0
-        for i in self.lista_personaje:
+        print("pp",lista_personaje[0])
+        for i in lista_personaje:
             p=str(i.name)
+            print(p)
             # p+=t
             if(i.tipo==0):
                 t=i.name+'     PS:'+str(i.vida)
@@ -115,57 +127,45 @@ class vp ():
                 self.listbox_personajes.itemconfigure(n,bg="#ff0000", fg="#fff")
             n+=1
     def eliminar(self):
+        global lista_personaje
         w=self.listbox_personajes.curselection()
         w=w[0]
-        p=self.lista_personaje[w]
-        self.lista_personaje.remove(p)
+        p=lista_personaje[w]
+        lista_personaje.remove(p)
         self.actualizar()
         print(self.listan)
 
     def curar(self):
+        global lista_personaje
         w=self.listbox_personajes.curselection()
         w=w[0]
-        self.lista_personaje[w].curar(int(self.spinPs.get()))
+        lista_personaje[w].curar(int(self.spinPs.get()))
         self.spinPs.set(0)
         self.actualizar()
     def danar(self):
+        global lista_personaje
         w=self.listbox_personajes.curselection()
         w=w[0]
-        self.lista_personaje[w].atacar(int(self.spinPs.get()))
+        lista_personaje[w].atacar(int(self.spinPs.get()))
         self.spinPs.set(0)
         self.actualizar()
     def Guardar(self):
-        f.Guardar(self.lista_personaje)
+        global lista_personaje
+        f.Guardar(lista_personaje)
+  
     def NuevoPersonaje(self):
-        self.NuevoPersonajeP1()
-        self.NuevoPersonajeP2()
-    def NuevoPersonajeP1(self):
         self.listan=[]
         print(self.listan)
-
-        t=vNP(self.pp,self.listan)
-        # self.pp.wait_window(t.pantalla)
-       
-    def nuevodispo(self):
-        if self.listan:
-            
-            print(self.listan)
-            p=c.enemigo(self.listan[0],self.listan[1])
-            self.lista_personaje.append(p)
-            self.actualizar()
-            print("aña")
-            self.listan=[]
+        t=vNP(self.pp)
+        self.pp.wait_window(t.pantalla)
         
+        # print(self.listan)
+
+   
         #PONER LO DE: ESTAS SEGURO DE ELIMINAR A *****
         
         
-        
-        
-        
-        
-        # self.pp.updateGUI()
-        
-    # def ActualizarLista
+   
         
                 
         
@@ -174,10 +174,9 @@ class vp ():
         
         self.pp.mainloop()
 class vNP:
-    def __init__(self,padre,lista):
-        self.lista=lista
-        
-        
+    def __init__(self,padre):
+        # self.lista=lista.copy()
+       
         
         self.pantalla = Toplevel(padre)
         self.pantalla.transient(padre)
@@ -196,9 +195,7 @@ class vNP:
         self.botonGuardar=Button(self.pantalla,text="Guardar",command=self.Guardar)
         self.botonGuardar.grid(column=0, row=2)
         self.botonGuardar.bind("<Return>", self.Guardar)
-        # self.botonGuardar.bind("<Escape>", self.cancel)
-
-        # self.nombre="pepe"
+     
         
         
         
@@ -206,20 +203,15 @@ class vNP:
         self.pantalla.mainloop()
         
     def Guardar(self,event=None):
+        global lista_personaje
         self.iniciativa=int(self.spinIniciativa.get())
         self.nombre=self.entryNombre.get()
-        self.lista.append(4)
-        self.lista.append("juan")
+        p=c.enemigo(4,"pepe")
+        lista_personaje.append(p)
         
-        # self.lista.set(self.lista)
         self.pantalla.destroy()
 
-# class dialogo(tk.toplevel):
-#     def __init__(self,padre,hijo):
-#         self.padre=padre
-#         self.hijo=hijo
-#     def ok(self):
-#         self.hijo.nombre
+
                 
 t=vp(lista_personaje)
 # vNP()
