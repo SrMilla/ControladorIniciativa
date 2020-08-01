@@ -129,7 +129,7 @@ class vp ():
         # self.botonPain.grid(column=9, row=4)
         self.botonEliminarPersonaje = ttk.Button(self.tab1,text="Eliminar personaje",command=self.eliminar)
         self.botonEliminarPersonaje.place(x=400,y=320)
-        self.botonAnadirpersonaje = ttk.Button(self.tab1,text="Nuevo personaje",command=self.NuevoPersonaje)
+        # self.botonAnadirpersonaje = ttk.Button(self.tab1,text="Nuevo personaje",command=self.NuevoPersonaje)
         # self.botonAnadirpersonaje.grid(column=9,row=5)
         
         ##################Tablon de anuncios##############
@@ -294,6 +294,7 @@ class vp ():
             if i>0:
                 lista_personaje.append(lista_equipo[n])
             n+=1
+        self.tablonf("SE HA UNIDO LA TORMENTA DE BALDUR")
         self.actualizar()
         
     # def cargarequipo(self):
@@ -307,10 +308,9 @@ class vp ():
     #         n+=20
     def tablonf(self,text):
         self.tablon.config(state='normal')
-        self.tablon.insert(INSERT,text)
-        self.tablon.insert(INSERT,"\n")
-
-        # self.tablon.insert(END,"")
+        self.tablon.insert(END,"\n")
+        self.tablon.insert(END,text)        
+        self.tablon.yview(END)
         self.tablon.config(state='disable')
         
     def Vaciar(self):
@@ -321,7 +321,7 @@ class vp ():
         lista_personaje = []
         f.Cargar()
         lista_personaje=c.lista_personajes.copy()
-        self.tablonf("pepe")
+        self.tablonf("¡Se ha cargado los personajes!")
 
         self.actualizar()
     def PasarTurno(self):
@@ -329,6 +329,9 @@ class vp ():
         text=(lista_personaje[0].name+" ha terminado su turno")
         self.tablonf(text)
         f.pasar_turno(lista_personaje)#se carga
+        text="Es el turno de "+lista_personaje[0].name
+        self.tablonf(text)
+
         self.actualizar()
     def actualizar(self):
         global lista_personaje
@@ -372,6 +375,8 @@ class vp ():
         w=w[0]
         p=lista_personaje[w]
         lista_personaje.remove(p)
+        text=("Se ha eliminado a "+p.name+"a manos de "+lista_personaje[0].name)
+        self.tablonf(text)
         self.actualizar()
 
     def curar(self):
@@ -379,6 +384,8 @@ class vp ():
         w=self.listbox_personajes.curselection()
         w=w[0]
         lista_personaje[w].curar(int(self.spinPs.get()))
+        text=("Se han curado "+(self.spinPs.get())+" PSs a "+lista_personaje[w].name)
+        self.tablonf(text)
         self.spinPs.set(0)
         self.actualizar()
     def danar(self):
@@ -386,17 +393,20 @@ class vp ():
         w=self.listbox_personajes.curselection()
         w=w[0]
         lista_personaje[w].atacar(int(self.spinPs.get()))
+        text=lista_personaje[w].name+" ha recibido "+self.spinPs.get()+" de daño por parte de "+lista_personaje[0].name
+        self.tablonf(text)
         self.spinPs.set(0)
         self.actualizar()
     def Guardar(self):
         global lista_personaje
+        self.tablonf("Se han guardado los datos")
         f.Guardar(lista_personaje)
   
-    def NuevoPersonaje(self):
-        self.listan=[]
-        print(self.listan)
-        t=vNP(self)
-        self.pp.wait_window(t.pantalla)
+    # def NuevoPersonaje(self):
+    #     self.listan=[]
+    #     print(self.listan)
+    #     t=vNP(self)
+    #     self.pp.wait_window(t.pantalla)
     def AnadirPersonaje(self):
         global lista_personaje
         nombre=self.entryNombre.get()
@@ -407,6 +417,8 @@ class vp ():
         else:
             p=c.enemigo(iniciativa,nombre,vida)
         lista_personaje.append(p)
+        text="Se ha añadido a "+nombre+" con "+str(vida)+ " de daño/vida y "+str(iniciativa)+" de iniciativa"
+        self.tablonf(text)
         self.actualizar()
         self.spinPSNuevo2.set(0)
         self.spinIniciativa.set(1)
