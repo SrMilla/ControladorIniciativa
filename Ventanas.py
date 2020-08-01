@@ -8,6 +8,8 @@ Created on Tue Jul 28 01:10:10 2020
 
 from tkinter import *
 from tkinter import ttk
+from tkinter import scrolledtext
+
 import tkinter as tk
 listan=[]
 from PIL import ImageTk, Image
@@ -130,7 +132,22 @@ class vp ():
         self.botonAnadirpersonaje = ttk.Button(self.tab1,text="Nuevo personaje",command=self.NuevoPersonaje)
         # self.botonAnadirpersonaje.grid(column=9,row=5)
         
-        ##########################################
+        ##################Tablon de anuncios##############
+        self.tablon= scrolledtext.ScrolledText(self.tab1,width=40,height=7.5,state=DISABLED)
+        self.tablon.place(x=600,y=200)
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        ################FOTOS##########################
         
         self.jpgaliado ="aliado.jpg"
         self.fotoAliado = ImageTk.PhotoImage(Image.open(self.jpgaliado))
@@ -288,6 +305,14 @@ class vp ():
     #         print(i.name)
     #         self.labelEquipo.place_forget()
     #         n+=20
+    def tablonf(self,text):
+        self.tablon.config(state='normal')
+        self.tablon.insert(INSERT,text)
+        self.tablon.insert(INSERT,"\n")
+
+        # self.tablon.insert(END,"")
+        self.tablon.config(state='disable')
+        
     def Vaciar(self):
         self.listbox_personajes.delete(0,END)
         
@@ -296,18 +321,19 @@ class vp ():
         lista_personaje = []
         f.Cargar()
         lista_personaje=c.lista_personajes.copy()
+        self.tablonf("pepe")
+
         self.actualizar()
     def PasarTurno(self):
         global lista_personaje
-
-        
+        text=(lista_personaje[0].name+" ha terminado su turno")
+        self.tablonf(text)
         f.pasar_turno(lista_personaje)#se carga
         self.actualizar()
     def actualizar(self):
         global lista_personaje
         self.listbox_personajes.delete(0,END)#se vacia
         n=0
-        print("pp",lista_personaje[0])
         for i in lista_personaje:
             if(i.tipo==0):
                 t=i.name+'     PS:'+str(i.vida)
@@ -383,7 +409,7 @@ class vp ():
         lista_personaje.append(p)
         self.actualizar()
         self.spinPSNuevo2.set(0)
-        self.spinIniciativa.set(0)
+        self.spinIniciativa.set(1)
         # self.entryNombre.insert("")
       
         # print(iniciativa)
