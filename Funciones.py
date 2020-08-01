@@ -107,6 +107,20 @@ def Cargar():
         else:
             p2=c.enemigo(inicias[i],names[i],ps[i])
             # p2.danoacumulado=ps[i]
+def cargarequipo(lista):
+    
+    df=pd.read_csv('Tormenta.csv')
+    names = df['Name']
+    inicias = df['Iniciativa']
+    tipo = df['tipo']
+    ps = df['PS']
+    for i in range (len(names)):
+        if tipo[i] == 0:#aliado
+            p1=c.aliado(inicias[i],names[i],ps[i])
+        else:
+            p1=c.enemigo(inicias[i],names[i],ps[i])
+            # p2.danoacumulado=ps[i]
+        lista.append(p1)
 def menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos):
     
     imprimirlista(lista_personajes)

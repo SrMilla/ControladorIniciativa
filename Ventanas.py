@@ -15,10 +15,11 @@ from PIL import ImageTk, Image
 import Funciones as f
 import Clases as c
 lista_personaje=[]
+lista_equipo=[]
 class vp ():
     
     def __init__(self,lista_personaje):
-        
+        global lista_equipo
         # Frame.__init__(self, master=None)
         self.pp = Tk()
         # self.lista_personaje=lista_personaje
@@ -181,9 +182,88 @@ class vp ():
         scrollbar_personaje.config(command=self.listbox_personajes.yview)
         self.listbox_personajes.place(x=60,y=150)
         # self.nuevodispo()
+        ####################LAD 2################
+        f.cargarequipo(lista_equipo)
 
+        self.labelequipo1=Label(self.tab2,text=lista_equipo[0].name,font=self.fuente)
+        self.labelequipo2=Label(self.tab2,text=lista_equipo[1].name,font=self.fuente)
+        self.labelequipo3=Label(self.tab2,text=lista_equipo[2].name,font=self.fuente)
+        self.labelequipo4=Label(self.tab2,text=lista_equipo[3].name,font=self.fuente)
+        self.labelequipo5=Label(self.tab2,text=lista_equipo[4].name,font=self.fuente)
+        self.labelequipo6=Label(self.tab2,text=lista_equipo[5].name,font=self.fuente)
+        self.labelequipo7=Label(self.tab2,text=lista_equipo[6].name,font=self.fuente)
+        self.labelequipo8=Label(self.tab2,text=lista_equipo[7].name,font=self.fuente)
+        
+        self.labelequipo1.place(x=80,y=60)
+        self.labelequipo2.place(x=80,y=100)
+        self.labelequipo3.place(x=80,y=140)
+        self.labelequipo4.place(x=80,y=180)
+        self.labelequipo5.place(x=600,y=60)
+        self.labelequipo6.place(x=600,y=100)
+        self.labelequipo7.place(x=600,y=140)
+        self.labelequipo8.place(x=600,y=180)
+        
+        self.spinIniE1=Spinbox(self.tab2,from_=0,to=99,width=3)
+        self.spinIniE2=Spinbox(self.tab2,from_=0,to=99,width=3)
+        self.spinIniE3=Spinbox(self.tab2,from_=0,to=99,width=3)
+        self.spinIniE4=Spinbox(self.tab2,from_=0,to=99,width=3)
+        self.spinIniE5=Spinbox(self.tab2,from_=0,to=99,width=3)
+        self.spinIniE6=Spinbox(self.tab2,from_=0,to=99,width=3)
+        self.spinIniE7=Spinbox(self.tab2,from_=0,to=99,width=3)
+        self.spinIniE8=Spinbox(self.tab2,from_=0,to=99,width=3)
+
+        self.spinIniE1.place(x=220,y=60)
+        self.spinIniE2.place(x=220,y=100)
+        self.spinIniE3.place(x=220,y=140)
+        self.spinIniE4.place(x=220,y=180)
+        self.spinIniE5.place(x=740,y=60)
+        self.spinIniE6.place(x=740,y=100)
+        self.spinIniE7.place(x=740,y=140)
+        self.spinIniE8.place(x=740,y=180)
+
+        self.botonEquipo=ttk.Button(self.tab2,text="Añadir al equipo",command=self.cargarequipo)
+        self.botonEquipo.place(x=440,y=270)
+
+        
+
+            
+        
+        
+        
+        
+        
+        
+        # self.cargarequipo()
+        
+        
         self.pp.mainloop()
-
+    def cargarequipo(self):
+        global lista_personaje
+        listaen=[]
+        listaen.append(int(self.spinIniE1.get()))
+        listaen.append(int(self.spinIniE2.get()))
+        listaen.append(int(self.spinIniE3.get()))
+        listaen.append(int(self.spinIniE4.get()))
+        listaen.append(int(self.spinIniE5.get()))
+        listaen.append(int(self.spinIniE6.get()))
+        listaen.append(int(self.spinIniE7.get()))
+        listaen.append(int(self.spinIniE8.get()))
+        n=0
+        for i in listaen:
+            if i>0:
+                lista_personaje.append(lista_equipo[n])
+            n+=1
+        self.actualizar()
+        
+    # def cargarequipo(self):
+    #     n=0
+    #     for i in lista_equipo:
+            
+    #         self.labelEquipo=Label(self.tab2,text=i.name)
+    #         self.labelEquipo.place(x=60,y=60+n)
+    #         print(i.name)
+    #         self.labelEquipo.place_forget()
+    #         n+=20
     def Vaciar(self):
         self.listbox_personajes.delete(0,END)
         
@@ -273,7 +353,7 @@ class vp ():
         lista_personaje.append(p)
         self.actualizar()
         # self.entryNombre.insert("")
-        
+      
         # print(iniciativa)
         # print(vida)
        
