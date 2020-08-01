@@ -79,20 +79,26 @@ def Guardar(lista_personajes):
     inicias=[]
     tipos=[]
     pain=[]
+    jpg=[]
     for i in lista_personajes:
         names.append(i.name)
         inicias.append(i.iniciativa)
+        jpg.append(i.jpg)
         if i.tipo == 1:
             tipos.append(1)
             pain.append(i.danoacumulado)
         else:
             tipos.append(0)
             pain.append(i.vida)
+
     data = {'Name': names,
             'Iniciativa': inicias,
             'tipo':tipos,
-            'PS':pain}
-    df = pd.DataFrame(data,columns =['Name','Iniciativa','tipo','PS'])
+            'PS':pain,
+            'jpg':jpg}
+        
+        
+    df = pd.DataFrame(data,columns =['Name','Iniciativa','tipo','PS','jpg'])
     df.to_csv('Partida.csv')
 def Cargar():
     c.lista_personajes=[]
@@ -101,24 +107,35 @@ def Cargar():
     inicias = df['Iniciativa']
     tipo = df['tipo']
     ps = df['PS']
+    img = df['jpg']
     for i in range (len(names)):
         if tipo[i] == 0:#aliado
             p1=c.aliado(inicias[i],names[i],ps[i])
+            p1.ponerImagen(img[i])
         else:
-            p2=c.enemigo(inicias[i],names[i],ps[i])
+            p1=c.enemigo(inicias[i],names[i],ps[i])
+            p1.ponerImagen(img[i])
+
             # p2.danoacumulado=ps[i]
 def cargarequipo(lista):
-    
+        
+
     df=pd.read_csv('Tormenta.csv')
     names = df['Name']
     inicias = df['Iniciativa']
     tipo = df['tipo']
     ps = df['PS']
+    img = df['jpg']
     for i in range (len(names)):
         if tipo[i] == 0:#aliado
             p1=c.aliado(inicias[i],names[i],ps[i])
+            p1.ponerImagen(img[i])
+
         else:
+            
             p1=c.enemigo(inicias[i],names[i],ps[i])
+            p1.ponerImagen(img[i])
+
             # p2.danoacumulado=ps[i]
         lista.append(p1)
 def menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos):

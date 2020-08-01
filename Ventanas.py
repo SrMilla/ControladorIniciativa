@@ -185,6 +185,9 @@ class vp ():
         ####################LAD 2################
         f.cargarequipo(lista_equipo)
 
+        
+
+
         self.labelequipo1=Label(self.tab2,text=lista_equipo[0].name,font=self.fuente)
         self.labelequipo2=Label(self.tab2,text=lista_equipo[1].name,font=self.fuente)
         self.labelequipo3=Label(self.tab2,text=lista_equipo[2].name,font=self.fuente)
@@ -220,6 +223,27 @@ class vp ():
         self.spinIniE6.place(x=740,y=100)
         self.spinIniE7.place(x=740,y=140)
         self.spinIniE8.place(x=740,y=180)
+
+        # self.jpge1=
+        # e1=lista_equipo[0].jpg
+        # print("pp",e1)
+        
+        # self.jpge1=lista_equipo[0].jpg
+        
+        # self.fotoe1=ImageTk.PhotoImage(Image.open(self.jpge1))
+        # self.panele1=tk.Label(self.tab2,image=self.fotoe1)
+        # self.panele1.place(x=20,y=60)
+
+
+
+
+
+
+
+
+
+
+
 
         self.botonEquipo=ttk.Button(self.tab2,text="Añadir al equipo",command=self.cargarequipo)
         self.botonEquipo.place(x=440,y=270)
@@ -298,13 +322,19 @@ class vp ():
             if lista_personaje[0].tipo==0:
                 self.lap2.configure(text=lista_personaje[0].vida)
                 self.lta2.configure(text="Con vida:")
-                self.panel.configure(image=self.fotoAliado)
+                if lista_personaje[0].jpg == "None":
+                    self.panel.configure(image=self.fotoAliado)
+                else:
+                    self.fotoa=ImageTk.PhotoImage(Image.open(lista_personaje[0].jpg))
+                    
+                    self.panel.configure(image=self.fotoa)
+                    
             else:
                 self.lap2.configure(text=lista_personaje[0].danoacumulado)
                 self.lta2.configure(text="Con un daño de:")
                 self.panel.configure(image=self.fotoEnemigo)
-
-
+            
+            
 
             n+=1
         self.lap.configure(text=lista_personaje[0].name)
@@ -352,6 +382,8 @@ class vp ():
             p=c.enemigo(iniciativa,nombre,vida)
         lista_personaje.append(p)
         self.actualizar()
+        self.spinPSNuevo2.set(0)
+        self.spinIniciativa.set(0)
         # self.entryNombre.insert("")
       
         # print(iniciativa)

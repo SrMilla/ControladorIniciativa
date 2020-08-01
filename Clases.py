@@ -25,6 +25,7 @@ class personaje:
         self.iniciativa=iniciativa
         self.name=name
         self.id=id(self)
+        
         lista.append(id(self))
         lista_de_iniciativa.append(iniciativa)
         lista_personajes.append(self)
@@ -32,12 +33,13 @@ class personaje:
         self.iniciativa=l
     def ponerImagen(self,imagen):
         self.jpg =imagen
-        self.foto = ImageTk.PhotoImage(Image.open(self.jpg))
+        # self.foto = ImageTk.PhotoImage(Image.open(self.jpg))
         
 class enemigo(personaje):
     def __init__(self,iniciativa,name):
         self.danoacumulado=0
         self.tipo=1
+        self.jpg="None"
         personaje.__init__(self,iniciativa,name)
         lista_enemigos.append(self)
         msg=('Se ha anadido a {0} con {1} de iniciativa')
@@ -45,6 +47,8 @@ class enemigo(personaje):
     def __init__(self,iniciativa,name,ps):
         # self.danoacumulado=0
         self.tipo=1
+        self.jpg="None"
+
         self.danoacumulado=ps
         personaje.__init__(self,iniciativa,name)
         lista_enemigos.append(self)
@@ -61,6 +65,8 @@ class aliado(personaje):
     def __init__(self,iniciativa,name,vida):
         self.tipo=0
         self.vida=vida
+        self.jpg="None"
+
         personaje.__init__(self,iniciativa,name)
         lista_aliados.append(self)
         msg=('Se ha anadido a {0} con {1} de iniciativa y {2}')
