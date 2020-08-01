@@ -30,6 +30,10 @@ class personaje:
         lista_personajes.append(self)
     def cambiariniciativa(self,l):
         self.iniciativa=l
+    def ponerImagen(self,imagen):
+        self.jpg =imagen
+        self.foto = ImageTk.PhotoImage(Image.open(self.jpg))
+        
 class enemigo(personaje):
     def __init__(self,iniciativa,name):
         self.danoacumulado=0
