@@ -42,8 +42,8 @@ class enemigo(personaje):
         self.jpg="None"
         personaje.__init__(self,iniciativa,name)
         lista_enemigos.append(self)
-        msg=('Se ha anadido a {0} con {1} de iniciativa')
-        print(msg.format(self.name,self.iniciativa))
+        # msg=('Se ha anadido a {0} con {1} de iniciativa')
+        # print(msg.format(self.name,self.iniciativa))
     def __init__(self,iniciativa,name,ps):
         # self.danoacumulado=0
         self.tipo=1
@@ -52,8 +52,8 @@ class enemigo(personaje):
         self.danoacumulado=ps
         personaje.__init__(self,iniciativa,name)
         lista_enemigos.append(self)
-        msg=('Se ha anadido a {0} con {1} de iniciativa')
-        print(msg.format(self.name,self.iniciativa))
+        # msg=('Se ha anadido a {0} con {1} de iniciativa')
+        # print(msg.format(self.name,self.iniciativa))
     
     def atacar(self,ps):
         self.danoacumulado+=ps
@@ -69,8 +69,8 @@ class aliado(personaje):
 
         personaje.__init__(self,iniciativa,name)
         lista_aliados.append(self)
-        msg=('Se ha anadido a {0} con {1} de iniciativa y {2}')
-        print(msg.format(self.name,self.iniciativa,self.vida))
+        # msg=('Se ha anadido a {0} con {1} de iniciativa y {2}')
+        # print(msg.format(self.name,self.iniciativa,self.vida))
     def atacar(self,ps):
         self.vida=self.vida-ps
         if self.vida<1:

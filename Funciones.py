@@ -176,4 +176,8 @@ def menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos):
     if a ==7:
         Cargar()
         return menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)
-
+# lista_personajes=[]
+# lista_de_iniciativa=[]
+# lista_aliados=[]
+# lista_enemigos=[]
+# menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)

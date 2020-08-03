@@ -13,6 +13,7 @@ from tkinter import scrolledtext
 import tkinter as tk
 listan=[]
 from PIL import ImageTk, Image
+import PIL
 # from Clases import lista_personaje
 import Funciones as f
 import Clases as c
