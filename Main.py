@@ -301,6 +301,7 @@ class vp ():
         n=0
         for i in listaen:
             if i>0:
+                lista_equipo[n].iniciativa=i
                 lista_personaje.append(lista_equipo[n])
             n+=1
         self.tablonf("SE HA UNIDO LA TORMENTA DE BALDUR")
@@ -537,6 +538,7 @@ class vp ():
     
 if __name__== '__main__':
     t=vp(lista_personaje)
+    
 # vNP()
 # p.Cargar()
 # p=c.lista_personajes
