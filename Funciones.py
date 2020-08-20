@@ -138,46 +138,46 @@ def cargarequipo(lista):
 
             # p2.danoacumulado=ps[i]
         lista.append(p1)
-def menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos):
+# def menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos):
     
-    imprimirlista(lista_personajes)
-    print("¿Que quieres hacer?")
-    print("1.Atacar")
-    print("2.Anadir aliado")
-    print("3.Anadir enemigo")
-    print("4.Quitar aliado")
-    print("5.Pasar turno")
-    print("6.Guardar")
-    print("7.Cargar")
-    print("0.Salir")
-    a=int((input()))
-    if a==0:
-        return True
-    # if a==1:
-    #     atacar(lista_personajes)
-    #     return menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)
-    if a==2:
-        anadir_aliado()
-        ciclo(lista_personajes,lista_de_iniciativa)
-        return menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)
-    if a==3:
-        anadir_enemigo()
-        ciclo(lista_personajes,lista_de_iniciativa)
-        return menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)
-    if a==4:
-        eliminar(lista_aliados,lista_enemigos,lista_personajes)
-        return menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)
-    if a==5:
-        pasar_turno(lista_personajes)
-        return menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)
-    if a==6:
-        Guardar(lista_personajes)
-        return menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)
-    if a ==7:
-        Cargar()
-        return menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)
-# lista_personajes=[]
-# lista_de_iniciativa=[]
-# lista_aliados=[]
-# lista_enemigos=[]
-# menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)
+#     imprimirlista(lista_personajes)
+#     print("¿Que quieres hacer?")
+#     print("1.Atacar")
+#     print("2.Anadir aliado")
+#     print("3.Anadir enemigo")
+#     print("4.Quitar aliado")
+#     print("5.Pasar turno")
+#     print("6.Guardar")
+#     print("7.Cargar")
+#     print("0.Salir")
+#     a=int((input()))
+#     if a==0:
+#         return True
+#     # if a==1:
+#     #     atacar(lista_personajes)
+#     #     return menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)
+#     if a==2:
+#         anadir_aliado()
+#         ciclo(lista_personajes,lista_de_iniciativa)
+#         return menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)
+#     if a==3:
+#         anadir_enemigo()
+#         ciclo(lista_personajes,lista_de_iniciativa)
+#         return menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)
+#     if a==4:
+#         eliminar(lista_aliados,lista_enemigos,lista_personajes)
+#         return menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)
+#     if a==5:
+#         pasar_turno(lista_personajes)
+#         return menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)
+#     if a==6:
+#         Guardar(lista_personajes)
+#         return menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)
+#     if a ==7:
+#         Cargar()
+#         return menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)
+# # lista_personajes=[]
+# # lista_de_iniciativa=[]
+# # lista_aliados=[]
+# # lista_enemigos=[]
+# # menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos)

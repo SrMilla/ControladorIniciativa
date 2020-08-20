@@ -10,15 +10,22 @@ from tkinter import *
 from tkinter import ttk
 from tkinter import scrolledtext
 
-import tkinter as tk
+# import tkinter as tk
 listan=[]
 from PIL import ImageTk, Image
 import PIL
+import os, sys
+
 # from Clases import lista_personaje
 import Funciones as f
 import Clases as c
 lista_personaje=[]
 lista_equipo=[]
+
+def resolver_ruta(ruta_relativa):
+    if hasattr(sys, '_MEIPASS'):
+        return os.path.join(sys._MEIPASS, ruta_relativa)
+    return os.path.join(os.path.abspath('.'), ruta_relativa)
 class vp ():
     
     def __init__(self,lista_personaje):
@@ -27,7 +34,7 @@ class vp ():
         self.pp = Tk()
         # self.lista_personaje=lista_personaje
         self.pp.title("Controlador de iniciativa")
-        self.primerjugador_name=tk.StringVar()
+        self.primerjugador_name=StringVar()
         self.primerjugador_name.set("")
         self.listan=[]
         ancho="1000"
@@ -132,7 +139,8 @@ class vp ():
         self.botonEliminarPersonaje.place(x=400,y=320)
         # self.botonAnadirpersonaje = ttk.Button(self.tab1,text="Nuevo personaje",command=self.NuevoPersonaje)
         # self.botonAnadirpersonaje.grid(column=9,row=5)
-        
+        self.reset = ttk.Button(self.tab1,text="Resetear",command=self.Seleccion)
+        self.reset.place(x=0,y=0)
         ##################Tablon de anuncios##############
         self.tablon= scrolledtext.ScrolledText(self.tab1,width=40,height=7.5,state=DISABLED)
         self.tablon.place(x=600,y=200)
@@ -152,7 +160,7 @@ class vp ():
         
         self.jpgaliado ="aliado.jpg"
         self.fotoAliado = ImageTk.PhotoImage(Image.open(self.jpgaliado))
-        self.panel = tk.Label(self.tab1, image = self.fotoAliado)
+        self.panel = Label(self.tab1, image = self.fotoAliado)
         self.panel.place(x=400,y=20)
         
         self.jpgenemigo="enemigo.jpg"
@@ -355,6 +363,7 @@ class vp ():
                 if lista_personaje[0].jpg == "None":
                     self.panel.configure(image=self.fotoAliado)
                 else:
+                    
                     self.fotoa=ImageTk.PhotoImage(Image.open(lista_personaje[0].jpg))
                     
                     self.panel.configure(image=self.fotoa)
@@ -435,8 +444,21 @@ class vp ():
    
         #PONER LO DE: ESTAS SEGURO DE ELIMINAR A *****
         
-        
-   
+    def Seleccion(self):  
+        global lista_personaje   
+        n=len(lista_personaje)                        #Se le pasa un vector y su tamano
+        for i in range(0,n-1):                      #Se recorre el vector desde la primera posicion a la ultima
+            min=i                                  #Se toma como minimo el elemento en la posicion i  
+            for j in range(i+1,n):                  #Se inicia un segundo recorrido saltandose la primera posicion
+                if lista_personaje[min].iniciativa < lista_personaje[j].iniciativa:                   #Si el minimo tomado anteriormente es superior a alguno del segundo recorrido
+                    min=j                           
+            aux=lista_personaje[min]
+            lista_personaje[min]=lista_personaje[i]
+            lista_personaje[i]=aux
+        self.actualizar()
+            # lin[min]=lin[i] 
+            # lin[i]=aux  
+            # lid[i]=aux2
         
                 
         
