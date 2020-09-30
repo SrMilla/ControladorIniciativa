@@ -324,6 +324,8 @@ class vp ():
         self.tablon.config(state='disable')
         
     def Vaciar(self):
+        global lista_personaje
+        lista_personaje=[]
         self.listbox_personajes.delete(0,END)
         
     def Cargar(self):
