@@ -138,6 +138,13 @@ def cargarequipo(lista):
 
             # p2.danoacumulado=ps[i]
         lista.append(p1)
+def buscarnombreobjetivo(lista,name):
+    p=0
+    for i in lista:
+        if name == i.name:
+            return p
+        p+=1
+            
 # def menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos):
     
 #     imprimirlista(lista_personajes)

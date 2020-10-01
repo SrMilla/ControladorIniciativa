@@ -15,13 +15,14 @@ listan=[]
 from PIL import ImageTk, Image
 import PIL
 import os, sys
-
+import Data as dt
 # from Clases import lista_personaje
 import Funciones as f
 import Clases as c
 lista_personaje=[]
 lista_equipo=[]
-
+cl3=None
+target=None
 def resolver_ruta(ruta_relativa):
     if hasattr(sys, '_MEIPASS'):
         return os.path.join(sys._MEIPASS, ruta_relativa)
@@ -29,15 +30,14 @@ def resolver_ruta(ruta_relativa):
 class vp ():
     
     def __init__(self,lista_personaje):
+        
         global lista_equipo
-        # Frame.__init__(self, master=None)
         self.pp = Tk()
-        # self.lista_personaje=lista_personaje
         self.pp.title("Controlador de iniciativa")
         self.primerjugador_name=StringVar()
         self.primerjugador_name.set("")
         self.listan=[]
-        ancho="1000"
+        ancho="1500"
         largo="420"
         pant=ancho+"x"+largo
         ia=int(ancho)
@@ -51,6 +51,7 @@ class vp ():
         self.tab_control.add(self.tab1,text="Principal")
         self.tab_control.add(self.tab2,text="Tormenta de Baldur")
         self.tab_control.pack(expand=1,fill='both')
+        ########################################FRAME
         
         
         
@@ -68,6 +69,10 @@ class vp ():
         self.lta2.place(x=60,y=80)
         self.lap2=Label(self.tab1,text="Vida del primer personaje",font = self.fuente)
         self.lap2.place(x=180,y=80)
+        
+        
+        
+        
         # self.lta2.grid(column=0,row=2)
         
         # self.lta2 = Label
@@ -126,9 +131,7 @@ class vp ():
         self.botonPasarturno.place(x=400,y=160)
         # self.botonPasarturno.grid(column=9,row=2)
         # self.botonEliminarPersonaje.place(x=400,y=200)
-        self.spinPs = ttk.Spinbox(self.tab1, from_=0,to=99)
-        self.spinPs.place(x=400,y=200)
-        self.spinPs.set(0)
+       
         self.botonCurar = ttk.Button(self.tab1,text="Curar",command=self.curar)
         # self.botonCurar.grid(column=9, row=3)
         self.botonCurar.place(x=400,y=240)
@@ -166,10 +169,32 @@ class vp ():
         self.jpgenemigo="enemigo.jpg"
         self.fotoEnemigo = ImageTk.PhotoImage(Image.open(self.jpgenemigo))
     
-
+#########################tercera columna
+        self.lap3=Label(self.tab1,text="Nombre",font=self.fuente)
+        self.lap3.place(x=1000,y=100)
+        self.lap4=Label(self.tab1,text="La vida",font=self.fuente)
+        self.lap4.place(x=1000,y=120) 
+        self.lap5=Label(self.tab1,text="Type of damage:",font=self.fuente)
+        self.lap5.place(x=1000,y=150)
+        self.combo = ttk.Combobox(self.tab1)
+        self.combo['values']=dt.tipe_attack
+        self.combo.place(x=1000,y=180)
+        self.boton_ataque_tipo=Button(self.tab1,text="Atacar por tipo",command=self.danartipo)
+        self.boton_ataque_tipo.place(x=1000,y=210)
         
+        self.spinPs = ttk.Spinbox(self.tab1, from_=0,to=99)
+        self.spinPs.place(x=1000,y=240)
+        self.spinPs.set(0)
         
+        self.combo_altered=ttk.Combobox(self.tab1)
+        self.combo_altered['values']=dt.state1
+        self.combo_altered.place(x=1000,y=270)
         
+        self.boton_altered=Button(self.tab1,text="Añadir estado",command=self.altered)
+        self.boton_altered.place(x=1000,y=300)
+        
+        self.tablondaño = scrolledtext.ScrolledText(self.tab1,width=13,height=15,state=DISABLED)
+        self.tablondaño.place(x=1160,y=25)
         # load = Image.open("aliado.jpg")
         # render = ImageTk.PhotoImage(load)
         # self.img = Label(self.tab1, image=render)
@@ -204,6 +229,7 @@ class vp ():
         # scrollbar_personaje.pack(side = RIGHT, fill = Y)  
         
         self.listbox_personajes = Listbox(self.tab1, yscrollcommand = scrollbar_personaje.set,width=35,height=10,font = self.fuente)  
+        self.listbox_personajes.bind('<<ListboxSelect>>',lambda event:self.modificar_col3())
         # self.listbox_personajes.grid(column=1, row=1)
         scrollbar_personaje.config(command=self.listbox_personajes.yview)
         self.listbox_personajes.place(x=60,y=150)
@@ -287,7 +313,54 @@ class vp ():
         
         
         self.pp.mainloop()
+    def altered(self):
+        global target
+        global lista_personaje
+        a=self.combo_altered.get()
+        t=f.buscarnombreobjetivo(lista_personaje,target)
+        lista_personaje[t].altered.append(a)
+        
+        
+    def modificar_col3(self):
+        global target
+        target=self.listbox_personajes.curselection()[0]
+        target=lista_personaje[target]
+        self.lap3.configure(text=target.name)
+        texto=""
+        if int(target.tipo)==0:
+            texto+=str(target.vida)
+            self.lap4.configure(text=target.vida)
+        else:
+            texto+=str(target.danoacumulado)
+            self.lap4.configure(text=target.danoacumulado)
+        self.tablondaño.delete(1.0, END)
+        for i in dt.tipe_attack:
+            if target.type_damage[i]>0:
+                texto=i+":"+str(target.type_damage[i])
+                self.tablondañof(texto)
+
+        target=target.name
+        # print(texto)
+        # self.tablondañof(texto)
+        
+        
+        # print(target.name)
+    
     def cargarequipo(self):
+        """
+        Esta funcion se encarga de cargar en lista_de_personaje los distintos personajes del equipo
+        que tenga una iniciativa mayor que uno.
+        ------
+        How it works
+        Se crea una lista vacia y esta recoge los spinbox del tab2 y luego hace un for en el cual se van añadiendo a lista de lista_personaje
+        aquellos que tengan una iniciativa mayor que 0
+        ------
+
+        Returns
+        -------
+        None.
+
+        """
         global lista_personaje
         listaen=[]
         listaen.append(int(self.spinIniE1.get()))
@@ -317,11 +390,33 @@ class vp ():
     #         self.labelEquipo.place_forget()
     #         n+=20
     def tablonf(self,text):
+        """
+        Esta funcion se encarga de añadir texto a un textrol
+        ---
+        How it works
+        Primero cambia el estado del 
+
+        Parameters
+        ----------
+        text : TYPE
+            DESCRIPTION.
+
+        Returns
+        -------
+        None.
+
+        """
         self.tablon.config(state='normal')
         self.tablon.insert(END,"\n")
         self.tablon.insert(END,text)        
         self.tablon.yview(END)
         self.tablon.config(state='disable')
+    def tablondañof(self,text):
+        self.tablondaño.config(state='normal')
+        self.tablondaño.insert(END,"\n")
+        self.tablondaño.insert(END,text)        
+        self.tablondaño.yview(END)
+        self.tablondaño.config(state='disable')
         
     def Vaciar(self):
         global lista_personaje
@@ -401,6 +496,8 @@ class vp ():
         self.tablonf(text)
         self.spinPs.set(0)
         self.actualizar()
+        
+        
     def danar(self):
         global lista_personaje
         w=self.listbox_personajes.curselection()
@@ -410,6 +507,25 @@ class vp ():
         self.tablonf(text)
         self.spinPs.set(0)
         self.actualizar()
+    def danartipo(self):
+        global lista_personaje
+        global target
+        t=self.combo.get()
+        # print(t)
+        # w=self.listbox_personajes.curselection()
+        # print(w)
+        print(target)
+        w=f.buscarnombreobjetivo(lista_personaje,target)
+        print(w)
+        # w=w[0]
+        lista_personaje[w].type_damage[t]+=int(self.spinPs.get())
+        lista_personaje[w].atacar(int(self.spinPs.get()))
+        text=lista_personaje[w].name+" ha recibido "+self.spinPs.get()+" de daño "+t+" por parte de "+lista_personaje[0].name
+        self.lap4.configure(text=lista_personaje[w].vida)
+        self.tablonf(text)
+        self.spinPs.set(0)
+        self.actualizar()
+        
     def Guardar(self):
         global lista_personaje
         self.tablonf("Se han guardado los datos")
@@ -420,6 +536,10 @@ class vp ():
     #     print(self.listan)
     #     t=vNP(self)
     #     self.pp.wait_window(t.pantalla)
+    
+    
+    
+    
     def AnadirPersonaje(self):
         global lista_personaje
         nombre=self.entryNombre.get()
@@ -446,6 +566,9 @@ class vp ():
 
    
         #PONER LO DE: ESTAS SEGURO DE ELIMINAR A *****
+        
+        
+        
         
     def Seleccion(self):  
         global lista_personaje   

@@ -7,13 +7,13 @@ Created on Wed Aug  5 01:20:19 2020
 from tkinter import *
 from tkinter import ttk
 from tkinter import scrolledtext
-
+import Data as dt
 # import tkinter as tk
 listan=[]
 from PIL import ImageTk, Image
 import PIL
 import os, sys
-
+import pandas as pd
 # from Clases import lista_personaje
 import Funciones as f
 import Clases as c
@@ -67,5 +67,17 @@ class vp():
         self.panel.place(x=00,y=20)
         self.pp.mainloop()
 
+df = pd.read_excel("ESTADOS.xlsx", header= None)
+state1=[]
+state2=[]
+tipe_attack=[]
+for i in range(10):
+    state1.append(df[0][i])
+for i in range(13):
+    tipe_attack.append(df[1][i])
+for i in range (14):
+    state2.append(df[2][i])
+    
+print(df[0][0])
 t=vp()
 # menu()

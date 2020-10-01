@@ -9,6 +9,8 @@ Created on Sat Jul 25 18:03:22 2020
 import pandas as pd
 from tkinter import *
 import Funciones as f
+import Data as dt
+
 # personaje
 # puntosdevida
 # iniciativa
@@ -29,6 +31,11 @@ class personaje:
         lista.append(id(self))
         lista_de_iniciativa.append(iniciativa)
         lista_personajes.append(self)
+        self.type_damage=dict() 
+        for i in dt.tipe_attack:
+            p=i
+            self.type_damage[i]=0
+        self.altered=[]
     def cambiariniciativa(self,l):
         self.iniciativa=l
     def ponerImagen(self,imagen):
@@ -42,6 +49,7 @@ class enemigo(personaje):
         self.jpg="None"
         personaje.__init__(self,iniciativa,name)
         lista_enemigos.append(self)
+        
         # msg=('Se ha anadido a {0} con {1} de iniciativa')
         # print(msg.format(self.name,self.iniciativa))
     def __init__(self,iniciativa,name,ps):
