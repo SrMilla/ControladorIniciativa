@@ -2,12 +2,47 @@
 import Clases as c
 import pandas as pd
 def pasar_turno(lista):
+    """
+    Pone el primer valor en el ultimo y todos los demas los mueve uno mas
+    
+    Como funciona
+    ----------
+    Guarda en aux el primer valor luego recorre la lista de modo que el la posicion actual es ocupada por el siguiente valor. Finalmente añade el primero en ultimo lugar
+
+    Parameters
+    ----------
+    lista :  Array 
+        DESCRIPTION.
+
+    Returns
+    -------
+    None.
+
+    """
     aux=lista[0]
     k=len(lista)
     for i in range(k-1):
         lista[i]=lista[i+1]
     lista[k-1]=aux
-def Seleccion(lin,n,lid):                             #Se le pasa un vector y su tamano
+def Seleccion(lin,n,lid):                            
+    """
+    Empleando el metodo de seleccion ordena la lista dependiendo de la inicitiva de mayor a menor
+
+    Parameters
+    ----------
+    lin : array
+        Es la una lista con las iniciativas .
+    n : int
+        Es la longuitud del array lin.
+    lid : int
+        DESCRIPTION.
+
+    Returns
+    -------
+    None.
+
+    """
+    
     for i in range(0,n-1):                      #Se recorre el vector desde la primera posicion a la ultima
         min=i                                   #Se toma como minimo el elemento en la posicion i  
         for j in range(i+1,n):                  #Se inicia un segundo recorrido saltandose la primera posicion
@@ -20,6 +55,25 @@ def Seleccion(lin,n,lid):                             #Se le pasa un vector y su
         lin[i]=aux  
         lid[i]=aux2
 def quitarpersonaje(lista_aliados,lista_enemigos,personaje,lista_personajes):
+    """
+    La funcion elimina a un personaje de las listas
+
+    Parameters
+    ----------
+    lista_aliados : Array 
+        Es un array de objetos tipo aliados.
+    lista_enemigos : Array
+        Es un array de objetos tipo enemigos.
+    personaje : Objeto personaje
+        Es el personaje que vamos a quitas.
+    lista_personajes : Array
+        Es la lista de personajes ordenados.
+
+    Returns
+    -------
+    None.
+
+    """
     if personaje.tipo == 0:
         lista_aliados.remove(personaje)
     else:
@@ -90,7 +144,7 @@ def Guardar(lista_personajes):
         else:
             tipos.append(0)
             pain.append(i.vida)
-
+        
     data = {'Name': names,
             'Iniciativa': inicias,
             'tipo':tipos,

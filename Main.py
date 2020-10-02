@@ -176,9 +176,12 @@ class vp ():
         self.lap4.place(x=1000,y=120) 
         self.lap5=Label(self.tab1,text="Type of damage:",font=self.fuente)
         self.lap5.place(x=1000,y=150)
+        
         self.combo = ttk.Combobox(self.tab1)
         self.combo['values']=dt.tipe_attack
         self.combo.place(x=1000,y=180)
+        self.combo.set(dt.tipe_attack[0])
+        
         self.boton_ataque_tipo=Button(self.tab1,text="Atacar por tipo",command=self.danartipo)
         self.boton_ataque_tipo.place(x=1000,y=210)
         
@@ -189,6 +192,7 @@ class vp ():
         self.combo_altered=ttk.Combobox(self.tab1)
         self.combo_altered['values']=dt.state1
         self.combo_altered.place(x=1000,y=270)
+        self.combo_altered.set(dt.state1[0])
         
         self.boton_altered=Button(self.tab1,text="Añadir estado",command=self.altered)
         self.boton_altered.place(x=1000,y=300)
@@ -319,9 +323,31 @@ class vp ():
         a=self.combo_altered.get()
         t=f.buscarnombreobjetivo(lista_personaje,target)
         lista_personaje[t].altered.append(a)
-        
-        
+    def actualizar_col3(self):
+        # self.tablondaño.delete('1.0', END)
+
+        global target
+        global lista_personaje
+        target=self.listbox_personajes.curselection()[0]
+        target=lista_personaje[target]
+        self.lap3.configure(text=target.name)
+        texto=""
+        #Se pone la vida
+        if int(target.tipo)==0:
+            texto+=str(target.vida)
+            self.lap4.configure(text=target.vida)
+        else:
+            texto+=str(target.danoacumulado)
+            self.lap4.configure(text=target.danoacumulado)
+        #pone l
+        for i in dt.tipe_attack:
+            if 0<target.type_damage[i]:
+                self.tablondañof(i+":"+str(target.type_damage[i]))
+
+    
     def modificar_col3(self):
+        # self.tablondaño.delete('1.0', END)
+
         global target
         target=self.listbox_personajes.curselection()[0]
         target=lista_personaje[target]
@@ -333,11 +359,14 @@ class vp ():
         else:
             texto+=str(target.danoacumulado)
             self.lap4.configure(text=target.danoacumulado)
-        self.tablondaño.delete(1.0, END)
+        # self.tablondaño.delete(1.0, END)
         for i in dt.tipe_attack:
-            if target.type_damage[i]>0:
-                texto=i+":"+str(target.type_damage[i])
-                self.tablondañof(texto)
+            print(i+str(target.type_damage[i]))
+            if 0==target.type_damage[i]:
+                print("r")
+            #     texto=i+":"+str(target.type_damage[i])
+            else:
+                self.tablondañof(i+":"+str(target.type_damage[i]))
 
         target=target.name
         # print(texto)
@@ -392,13 +421,17 @@ class vp ():
     def tablonf(self,text):
         """
         Esta funcion se encarga de añadir texto a un textrol
-        ---
+        
         How it works
-        Primero cambia el estado del 
-
+        ---
+        Primero cambia el estado del tablon para poder editarlo,añade un salto,añade el texto y lo vuelve a cerrar
+        
+        
+        ---
         Parameters
+        text:El texto que queremos añadir al tablon
         ----------
-        text : TYPE
+        text : TYPE str
             DESCRIPTION.
 
         Returns
@@ -412,6 +445,19 @@ class vp ():
         self.tablon.yview(END)
         self.tablon.config(state='disable')
     def tablondañof(self,text):
+        """
+        Igual que la funcion tablonf(self,text)
+
+        Parameters
+        ----------
+        text : TYPE
+            DESCRIPTION.
+
+        Returns
+        -------
+        None.
+
+        """
         self.tablondaño.config(state='normal')
         self.tablondaño.insert(END,"\n")
         self.tablondaño.insert(END,text)        
@@ -419,11 +465,27 @@ class vp ():
         self.tablondaño.config(state='disable')
         
     def Vaciar(self):
+        """
+        Esta funcion resetea tanto la lista_personake como la listbox
+
+        Returns
+        -------
+        None.
+
+        """
         global lista_personaje
         lista_personaje=[]
         self.listbox_personajes.delete(0,END)
         
     def Cargar(self):
+        """
+        Esta funcion simplemente vacia la lista_personaje y luego llama a la funcion Cargar y esta devuelve una partida que estaba a medias
+
+        Returns
+        -------
+        None.
+
+        """
         global lista_personaje
         lista_personaje = []
         f.Cargar()
@@ -432,6 +494,17 @@ class vp ():
 
         self.actualizar()
     def PasarTurno(self):
+        """
+        Esta funcion pasa de turno poniendo al primero como el ultimo y el segundo primero y asi consecutivamente
+        ------
+       
+        Primero lo anuncia en el tablon,luego llama a la funcion pasar turno y anuncia de quien es el turno
+
+        Returns
+        -------
+        None.
+
+        """
         global lista_personaje
         text=(lista_personaje[0].name+" ha terminado su turno")
         self.tablonf(text)
@@ -441,6 +514,14 @@ class vp ():
 
         self.actualizar()
     def actualizar(self):
+        """
+        
+
+        Returns
+        -------
+        None.
+
+        """
         global lista_personaje
         self.listbox_personajes.delete(0,END)#se vacia
         n=0
@@ -520,13 +601,29 @@ class vp ():
         # w=w[0]
         lista_personaje[w].type_damage[t]+=int(self.spinPs.get())
         lista_personaje[w].atacar(int(self.spinPs.get()))
+        
         text=lista_personaje[w].name+" ha recibido "+self.spinPs.get()+" de daño "+t+" por parte de "+lista_personaje[0].name
-        self.lap4.configure(text=lista_personaje[w].vida)
+        if lista_personaje[w].tipo==0:
+            self.lap4.configure(text=lista_personaje[w].vida)
+        else :
+            self.lap4.configure(text=lista_personaje[w].danoacumulado)
         self.tablonf(text)
         self.spinPs.set(0)
         self.actualizar()
         
     def Guardar(self):
+        """
+        Esta funcion simplemente se encarga de guardar los datos de la partida actual en un csv
+        
+        ppp
+        -------
+        cosa
+
+        Returns
+        -------
+        None.
+
+        """
         global lista_personaje
         self.tablonf("Se han guardado los datos")
         f.Guardar(lista_personaje)
