@@ -601,8 +601,7 @@ class vp ():
         self.tablonf(text)
         f.pasar_turno(lista_personaje)#se carga
         text="Es el turno de "+lista_personaje[0].name
-        t=os.listdir("./main")
-        print(t)
+       
         self.tablonf(text)
 
         self.actualizar()
