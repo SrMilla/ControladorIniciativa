@@ -132,14 +132,14 @@ class vp ():
         # self.botonPasarturno.grid(column=9,row=2)
         # self.botonEliminarPersonaje.place(x=400,y=200)
        
-        self.botonCurar = ttk.Button(self.tab1,text="Curar",command=self.curar)
-        # self.botonCurar.grid(column=9, row=3)
-        self.botonCurar.place(x=400,y=240)
-        self.botonPain = ttk.Button(self.tab1,text="Pain",command=self.danar)
-        self.botonPain.place(x=400,y=280)
+        # self.botonCurar = ttk.Button(self.tab1,text="Curar",command=self.curar)
+        # # self.botonCurar.grid(column=9, row=3)
+        # self.botonCurar.place(x=400,y=240)
+        # self.botonPain = ttk.Button(self.tab1,text="Pain",command=self.danar)
+        # self.botonPain.place(x=400,y=280)
         # self.botonPain.grid(column=9, row=4)
-        self.botonEliminarPersonaje = ttk.Button(self.tab1,text="Eliminar personaje",command=self.eliminar)
-        self.botonEliminarPersonaje.place(x=400,y=320)
+        self.botonEliminarPersonaje = Button(self.tab1,text="Eliminar personaje",command=self.eliminar)
+        self.botonEliminarPersonaje.place(x=1350,y=350)
         # self.botonAnadirpersonaje = ttk.Button(self.tab1,text="Nuevo personaje",command=self.NuevoPersonaje)
         # self.botonAnadirpersonaje.grid(column=9,row=5)
         self.reset = ttk.Button(self.tab1,text="Resetear",command=self.Seleccion)
@@ -163,42 +163,62 @@ class vp ():
         
         self.jpgaliado ="aliado.jpg"
         self.fotoAliado = ImageTk.PhotoImage(Image.open(self.jpgaliado))
+        self.fotoenemi= ImageTk.PhotoImage(Image.open("enemigo.jpg"))
+        
         self.panel = Label(self.tab1, image = self.fotoAliado)
         self.panel.place(x=400,y=20)
+        
         
         self.jpgenemigo="enemigo.jpg"
         self.fotoEnemigo = ImageTk.PhotoImage(Image.open(self.jpgenemigo))
     
 #########################tercera columna
+        self.panel2 =Label(self.tab1,image=self.fotoenemi)
+        self.panel2.place(x=1000,y=20)
+        
+        
         self.lap3=Label(self.tab1,text="Nombre",font=self.fuente)
-        self.lap3.place(x=1000,y=100)
+        self.lap3.place(x=1000,y=150)
         self.lap4=Label(self.tab1,text="La vida",font=self.fuente)
-        self.lap4.place(x=1000,y=120) 
+        self.lap4.place(x=1000,y=170) 
         self.lap5=Label(self.tab1,text="Type of damage:",font=self.fuente)
-        self.lap5.place(x=1000,y=150)
+        self.lap5.place(x=1000,y=190)
         
         self.combo = ttk.Combobox(self.tab1)
         self.combo['values']=dt.tipe_attack
-        self.combo.place(x=1000,y=180)
+        self.combo.place(x=1000,y=220)
         self.combo.set(dt.tipe_attack[0])
         
-        self.boton_ataque_tipo=Button(self.tab1,text="Atacar por tipo",command=self.danartipo)
-        self.boton_ataque_tipo.place(x=1000,y=210)
+        self.boton_ataque_tipo=Button(self.tab1,text="Atacar",command=self.danartipo)
+        self.boton_ataque_tipo.place(x=1000,y=250)
+        
+        self.boton_ataque_tipo=Button(self.tab1,text="Curar",command=self.curar)
+        self.boton_ataque_tipo.place(x=1050,y=250)
         
         self.spinPs = ttk.Spinbox(self.tab1, from_=0,to=99)
-        self.spinPs.place(x=1000,y=240)
+        self.spinPs.place(x=1000,y=280)
         self.spinPs.set(0)
         
         self.combo_altered=ttk.Combobox(self.tab1)
         self.combo_altered['values']=dt.state1
-        self.combo_altered.place(x=1000,y=270)
+        self.combo_altered.place(x=1000,y=310)
         self.combo_altered.set(dt.state1[0])
         
         self.boton_altered=Button(self.tab1,text="Añadir estado",command=self.altered)
-        self.boton_altered.place(x=1000,y=300)
+        self.boton_altered.place(x=1000,y=340)
         
-        self.tablondaño = scrolledtext.ScrolledText(self.tab1,width=13,height=15,state=DISABLED)
-        self.tablondaño.place(x=1160,y=25)
+        
+        self.listbox_daño = Listbox(self.tab1)
+        self.listbox_daño.place(x=1200,y=20)
+        
+        self.listbox_estado = Listbox(self.tab1)
+        self.listbox_estado.place(x=1350,y=20)
+        
+        self.listbox_estado_user = Listbox(self.tab1)
+        self.listbox_estado_user.place(x=400,y=200)
+        
+        # self.tablondaño = scrolledtext.ScrolledText(self.tab1,width=13,height=15,state=DISABLED)
+        # self.tablondaño.place(x=1160,y=25)
         # load = Image.open("aliado.jpg")
         # render = ImageTk.PhotoImage(load)
         # self.img = Label(self.tab1, image=render)
@@ -317,58 +337,127 @@ class vp ():
         
         
         self.pp.mainloop()
+    def ponerfotos3(self):
+        global lista_equipo
+        global target
+        print(target)
+        t=f.buscarnombreobjetivo(lista_personaje,target)
+        print("rrr"+str(t))
+        # t=lista_personaje[t]
+        if lista_personaje[t].jpg=="None":
+            if lista_personaje[t].tipo==0:
+                self.panel2.configure(image=self.fotoAliado)
+            else:
+                self.panel2.configure(image=self.fotoEnemigo)
+        else:
+            self.fotob=ImageTk.PhotoImage(Image.open(lista_personaje[t].jpg))
+            self.panel2.configure(image=self.fotob)
+    def tablondañof(self):
+        
+        # damage=tk.StringVar()
+        global target
+        global lista_personaje
+        o=f.buscarnombreobjetivo(lista_personaje,target)
+        o=lista_personaje[o]
+        p=0
+        self.listbox_daño.delete(0,END)
+        for i in dt.tipe_attack:
+            if 0<o.type_damage[i]:
+                t=(i+":"+str(o.type_damage[i]))
+                self.listbox_daño.insert(p, t)
+                p+=1
+    def tablonestadoobjetivo(self):
+        global target
+        global lista_personaje
+        o=f.buscarnombreobjetivo(lista_personaje,target)
+        self.listbox_estado.delete(0,END)
+        p=0
+        for i in lista_personaje[o].altered:
+            self.listbox_estado.insert(p, i)
+            p+=1
+    def tablonestadouser(self):
+        global lista_personaje
+        self.listbox_estado_user.delete(0,END)
+        p=0
+        for i in lista_personaje[0].altered:
+            self.listbox_estado_user.insert(p, i)
+            p+=1
     def altered(self):
         global target
         global lista_personaje
         a=self.combo_altered.get()
+        print(a)
         t=f.buscarnombreobjetivo(lista_personaje,target)
         lista_personaje[t].altered.append(a)
-    def actualizar_col3(self):
-        # self.tablondaño.delete('1.0', END)
+        self.tablonestadoobjetivo()
 
+    # def vaciarenemigo(self):
+    #     self.tablondaño.config(state='normal')
+    #     # self.tablondaño.insert(END,"\n")
+    #     self.tablondaño.delete(0, end)
+    
+        
+    #     # self.tablondaño.yview(END)
+    #     self.tablondaño.config(state='disable')
+    def actualizar_col3(self):
+        # self.tablondañof()
+        # self.tablondaño.delete('1.0', END)
+        
+        # self.vaciarenemigo()
         global target
         global lista_personaje
-        target=self.listbox_personajes.curselection()[0]
-        target=lista_personaje[target]
+        
+        # target=self.listbox_personajes.curselection()[0]
+        # print(target)
+        # target=lista_personaje[target]
         self.lap3.configure(text=target.name)
         texto=""
         #Se pone la vida
-        if int(target.tipo)==0:
-            texto+=str(target.vida)
+        if int(lista_personaje[target].tipo)==0:
+            texto+=str(lista_personaje[target].vida)
             self.lap4.configure(text=target.vida)
         else:
             texto+=str(target.danoacumulado)
             self.lap4.configure(text=target.danoacumulado)
         #pone l
-        for i in dt.tipe_attack:
-            if 0<target.type_damage[i]:
-                self.tablondañof(i+":"+str(target.type_damage[i]))
+        # for i in dt.tipe_attack:
+        #     if 0<target.type_damage[i]:
+        #         self.tablondañof(i+":"+str(target.type_damage[i]))
 
     
     def modificar_col3(self):
         # self.tablondaño.delete('1.0', END)
-
         global target
         target=self.listbox_personajes.curselection()[0]
         target=lista_personaje[target]
         self.lap3.configure(text=target.name)
-        texto=""
         if int(target.tipo)==0:
-            texto+=str(target.vida)
+            # texto+=str(target.vida)
             self.lap4.configure(text=target.vida)
         else:
-            texto+=str(target.danoacumulado)
+            # texto+=str(target.danoacumulado)
             self.lap4.configure(text=target.danoacumulado)
+        texto=""
+        # if int(target.tipo)==0:
+        #     texto+=str(target.vida)
+        #     self.lap4.configure(text=target.vida)
+        # else:
+        #     texto+=str(target.danoacumulado)
+        #     self.lap4.configure(text=target.danoacumulado)
+        
         # self.tablondaño.delete(1.0, END)
-        for i in dt.tipe_attack:
-            print(i+str(target.type_damage[i]))
-            if 0==target.type_damage[i]:
-                print("r")
-            #     texto=i+":"+str(target.type_damage[i])
-            else:
-                self.tablondañof(i+":"+str(target.type_damage[i]))
+        # for i in dt.tipe_attack:
+        #     print(i+str(target.type_damage[i]))
+        #     if 0==target.type_damage[i]:
+        #         print("r")
+        #     #     texto=i+":"+str(target.type_damage[i])
+        #     else:
+        #         self.tablondañof(i+":"+str(target.type_damage[i]))
 
         target=target.name
+        self.tablondañof()
+        self.ponerfotos3()
+        self.tablonestadoobjetivo()
         # print(texto)
         # self.tablondañof(texto)
         
@@ -444,25 +533,25 @@ class vp ():
         self.tablon.insert(END,text)        
         self.tablon.yview(END)
         self.tablon.config(state='disable')
-    def tablondañof(self,text):
-        """
-        Igual que la funcion tablonf(self,text)
+    # def tablondañof(self,text):
+    #     """
+    #     Igual que la funcion tablonf(self,text)
 
-        Parameters
-        ----------
-        text : TYPE
-            DESCRIPTION.
+    #     Parameters
+    #     ----------
+    #     text : TYPE
+    #         DESCRIPTION.
 
-        Returns
-        -------
-        None.
+    #     Returns
+    #     -------
+    #     None.
 
-        """
-        self.tablondaño.config(state='normal')
-        self.tablondaño.insert(END,"\n")
-        self.tablondaño.insert(END,text)        
-        self.tablondaño.yview(END)
-        self.tablondaño.config(state='disable')
+    #     """
+    #     self.tablondaño.config(state='normal')
+    #     self.tablondaño.insert(END,"\n")
+    #     self.tablondaño.insert(END,text)        
+    #     self.tablondaño.yview(END)
+    #     self.tablondaño.config(state='disable')
         
     def Vaciar(self):
         """
@@ -556,7 +645,9 @@ class vp ():
 
             n+=1
         self.lap.configure(text=lista_personaje[0].name)
-        
+        self.tablondañof()
+        self.tablonestadoobjetivo()
+        self.tablonestadouser()
 
     def eliminar(self):
         global lista_personaje
@@ -570,10 +661,17 @@ class vp ():
 
     def curar(self):
         global lista_personaje
-        w=self.listbox_personajes.curselection()
-        w=w[0]
+        global target
+        w=f.buscarnombreobjetivo(lista_personaje,target)
+
+        # w=self.listbox_personajes.curselection()
+        # w=w[0]
         lista_personaje[w].curar(int(self.spinPs.get()))
         text=("Se han curado "+(self.spinPs.get())+" PSs a "+lista_personaje[w].name)
+        if lista_personaje[w].tipo==0:
+            self.lap4.configure(text=lista_personaje[w].vida)
+        else :
+            self.lap4.configure(text=lista_personaje[w].danoacumulado)
         self.tablonf(text)
         self.spinPs.set(0)
         self.actualizar()
@@ -581,8 +679,8 @@ class vp ():
         
     def danar(self):
         global lista_personaje
-        w=self.listbox_personajes.curselection()
-        w=w[0]
+        w=f.buscarnombreobjetivo(lista_personaje,target)
+        # w=w[0]
         lista_personaje[w].atacar(int(self.spinPs.get()))
         text=lista_personaje[w].name+" ha recibido "+self.spinPs.get()+" de daño por parte de "+lista_personaje[0].name
         self.tablonf(text)
