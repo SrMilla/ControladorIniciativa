@@ -352,7 +352,7 @@ class vp ():
             else:
                 self.panel2.configure(image=self.fotoEnemigo)
         else:
-            self.fotob=ImageTk.PhotoImage(Image.open(ruta_fotos+lista_personaje[t].jpg))
+            self.fotob=ImageTk.PhotoImage(Image.open(ruta_fotos+lista_personaje[t].name+".jpg"))
             self.panel2.configure(image=self.fotob)
     def tablondañof(self):
         
@@ -628,25 +628,45 @@ class vp ():
                 self.listbox_personajes.insert(END,t)
                 self.listbox_personajes.itemconfigure(n,bg="#ff0000", fg="#fff")
                 # self.lap2.configure(text=lista_personaje[0].danoacumulado)
+            # if lista_personaje[0].tipo==0:
+            #     self.lap2.configure(text=lista_personaje[0].vida)
+            #     self.lta2.configure(text="Con vida:")
+            #     if lista_personaje[0].jpg == "None":
+            #         self.panel.configure(image=self.fotoAliado)
+            #     else:
+                    
+            #         self.fotoa=ImageTk.PhotoImage(Image.open(ruta_fotos+lista_personaje[0].name+".jpg"))
+                    
+            #         self.panel.configure(image=self.fotoa)
+                    
+            # else:
+            #     self.lap2.configure(text=lista_personaje[0].danoacumulado)
+            #     self.lta2.configure(text="Con un daño de:")
+            #     self.panel.configure(image=self.fotoEnemigo)
+            
+        
+
+            n+=1
+        foto_turno=ruta_fotos+lista_personaje[0].name+".jpg"
+        print(foto_turno)
+        if os.path.isfile(foto_turno):
+            self.fotoa=ImageTk.PhotoImage(Image.open(foto_turno))
+            self.panel.configure(image=self.fotoa)
             if lista_personaje[0].tipo==0:
                 self.lap2.configure(text=lista_personaje[0].vida)
                 self.lta2.configure(text="Con vida:")
-                if lista_personaje[0].jpg == "None":
-                    self.panel.configure(image=self.fotoAliado)
-                else:
-                    
-                    self.fotoa=ImageTk.PhotoImage(Image.open(ruta_fotos+lista_personaje[0].jpg))
-                    
-                    self.panel.configure(image=self.fotoa)
-                    
             else:
                 self.lap2.configure(text=lista_personaje[0].danoacumulado)
                 self.lta2.configure(text="Con un daño de:")
+        else:
+            if lista_personaje[0].tipo==0:
+                self.panel.configure(image=self.fotoAliado)
+                self.lap2.configure(text=lista_personaje[0].vida)
+                self.lta2.configure(text="Con vida:")
+            else:
                 self.panel.configure(image=self.fotoEnemigo)
-            
-            
-
-            n+=1
+                self.lap2.configure(text=lista_personaje[0].danoacumulado)
+                self.lta2.configure(text="Con un daño de:")
         self.lap.configure(text=lista_personaje[0].name)
         self.tablondañof()
         self.tablonestadoobjetivo()
