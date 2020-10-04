@@ -50,8 +50,21 @@ class vp ():
         self.tab_control=ttk.Notebook(self.pp)
         self.tab1=ttk.Frame(self.tab_control)
         self.tab2=ttk.Frame(self.tab_control)
+        self.tab3=ttk.Frame(self.tab_control)
+        
+        
+        # self.NPCA=ttk.Frame(self.tab3)
+        # self.tab_control.add(self.NPCA, text="A")
         self.tab_control.add(self.tab1,text="Principal")
         self.tab_control.add(self.tab2,text="Tormenta de Baldur")
+        self.tab_control.add(self.tab3,text="NPCs")
+        self.tabNPC=ttk.Notebook((self.pp))
+        
+        # self.tab_controlNPCs=ttk.Notebook(self.pp)
+        # self.tabA=ttk.Frame(self.tab_control)
+        # self.tab_controlNPCs(self.tabA,text="A")
+        
+        
         self.tab_control.pack(expand=1,fill='both')
         ########################################FRAME
         
@@ -163,15 +176,15 @@ class vp ():
         
         ################FOTOS##########################
         
-        self.jpgaliado =ruta_fotos+"aliado.jpg"
+        self.jpgaliado =ruta_fotos+"aliado.png"
         self.fotoAliado = ImageTk.PhotoImage(Image.open(self.jpgaliado))
-        self.fotoenemi= ImageTk.PhotoImage(Image.open(ruta_fotos+"enemigo.jpg"))
+        self.fotoenemi= ImageTk.PhotoImage(Image.open(ruta_fotos+"enemigo.png"))
         
         self.panel = Label(self.tab1, image = self.fotoAliado)
         self.panel.place(x=400,y=20)
         
         
-        self.jpgenemigo=ruta_fotos+"enemigo.jpg"
+        self.jpgenemigo=ruta_fotos+"enemigo.png"
         self.fotoEnemigo = ImageTk.PhotoImage(Image.open(self.jpgenemigo))
     
 #########################tercera columna
@@ -219,21 +232,8 @@ class vp ():
         self.listbox_estado_user = Listbox(self.tab1)
         self.listbox_estado_user.place(x=400,y=200)
         
-        # self.tablondaño = scrolledtext.ScrolledText(self.tab1,width=13,height=15,state=DISABLED)
-        # self.tablondaño.place(x=1160,y=25)
-        # load = Image.open("aliado.jpg")
-        # render = ImageTk.PhotoImage(load)
-        # self.img = Label(self.tab1, image=render)
-        # self.img.image = render
-        # self.img.place(x=400,y=20)
-        # img.grid(column=9, row=7)
-        
-        
-        # self.personaje = Label(self.tab1,textvariable=self.primerjugador_name)
-        # self.personaje.grid(column=1,row=1)
-        
-        
-        
+     #################Tercera pestaña
+         
         
         
         
@@ -352,7 +352,7 @@ class vp ():
             else:
                 self.panel2.configure(image=self.fotoEnemigo)
         else:
-            self.fotob=ImageTk.PhotoImage(Image.open(ruta_fotos+lista_personaje[t].name+".jpg"))
+            self.fotob=ImageTk.PhotoImage(Image.open(ruta_fotos+lista_personaje[t].name+".png"))
             self.panel2.configure(image=self.fotob)
     def tablondañof(self):
         
@@ -627,27 +627,8 @@ class vp ():
                 t=i.name+'     DR:'+str(i.danoacumulado)
                 self.listbox_personajes.insert(END,t)
                 self.listbox_personajes.itemconfigure(n,bg="#ff0000", fg="#fff")
-                # self.lap2.configure(text=lista_personaje[0].danoacumulado)
-            # if lista_personaje[0].tipo==0:
-            #     self.lap2.configure(text=lista_personaje[0].vida)
-            #     self.lta2.configure(text="Con vida:")
-            #     if lista_personaje[0].jpg == "None":
-            #         self.panel.configure(image=self.fotoAliado)
-            #     else:
-                    
-            #         self.fotoa=ImageTk.PhotoImage(Image.open(ruta_fotos+lista_personaje[0].name+".jpg"))
-                    
-            #         self.panel.configure(image=self.fotoa)
-                    
-            # else:
-            #     self.lap2.configure(text=lista_personaje[0].danoacumulado)
-            #     self.lta2.configure(text="Con un daño de:")
-            #     self.panel.configure(image=self.fotoEnemigo)
-            
-        
-
             n+=1
-        foto_turno=ruta_fotos+lista_personaje[0].name+".jpg"
+        foto_turno=ruta_fotos+lista_personaje[0].name+".png"
         print(foto_turno)
         if os.path.isfile(foto_turno):
             self.fotoa=ImageTk.PhotoImage(Image.open(foto_turno))
