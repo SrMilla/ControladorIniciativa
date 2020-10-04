@@ -4,8 +4,7 @@ Basicamente este programa consiste en una interfaz que te ayuda a tener controla
 Basicamente tenemos que usar la libreria tkinter la cual nos dara lo que necesitamos para la realizacion de la interfaz
 Por otro lado tenemos Pandas que nos servira para guardar y cargar partidas y tambien para leer fichas de equipo(y proximamente mas cosas)
 ## Instalación 🔧
-Se incluye un .exe para su facil ejecucion aunque no se tenga python o algunas de las librerias necesarias
-
+Descaga el comprimido y descomprimelo en una carpeta,luego ejecuta el .exe
 ## Proximas updates🚀
 
 * Poder añadir monstruos determinados
