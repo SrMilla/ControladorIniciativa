@@ -16,6 +16,7 @@ from PIL import ImageTk, Image
 import PIL
 import os, sys
 import Data as dt
+import os
 # from Clases import lista_personaje
 import Funciones as f
 import Clases as c
@@ -23,6 +24,7 @@ lista_personaje=[]
 lista_equipo=[]
 cl3=None
 target=None
+ruta_fotos="./imagenes/"
 def resolver_ruta(ruta_relativa):
     if hasattr(sys, '_MEIPASS'):
         return os.path.join(sys._MEIPASS, ruta_relativa)
@@ -161,15 +163,15 @@ class vp ():
         
         ################FOTOS##########################
         
-        self.jpgaliado ="aliado.jpg"
+        self.jpgaliado =ruta_fotos+"aliado.jpg"
         self.fotoAliado = ImageTk.PhotoImage(Image.open(self.jpgaliado))
-        self.fotoenemi= ImageTk.PhotoImage(Image.open("enemigo.jpg"))
+        self.fotoenemi= ImageTk.PhotoImage(Image.open(ruta_fotos+"enemigo.jpg"))
         
         self.panel = Label(self.tab1, image = self.fotoAliado)
         self.panel.place(x=400,y=20)
         
         
-        self.jpgenemigo="enemigo.jpg"
+        self.jpgenemigo=ruta_fotos+"enemigo.jpg"
         self.fotoEnemigo = ImageTk.PhotoImage(Image.open(self.jpgenemigo))
     
 #########################tercera columna
@@ -350,7 +352,7 @@ class vp ():
             else:
                 self.panel2.configure(image=self.fotoEnemigo)
         else:
-            self.fotob=ImageTk.PhotoImage(Image.open(lista_personaje[t].jpg))
+            self.fotob=ImageTk.PhotoImage(Image.open(ruta_fotos+lista_personaje[t].jpg))
             self.panel2.configure(image=self.fotob)
     def tablondañof(self):
         
@@ -358,7 +360,7 @@ class vp ():
         global target
         global lista_personaje
         o=f.buscarnombreobjetivo(lista_personaje,target)
-        o=lista_personaje[o]
+        o=lista_personaje[int(o)]
         p=0
         self.listbox_daño.delete(0,END)
         for i in dt.tipe_attack:
@@ -599,6 +601,8 @@ class vp ():
         self.tablonf(text)
         f.pasar_turno(lista_personaje)#se carga
         text="Es el turno de "+lista_personaje[0].name
+        t=os.listdir("./main")
+        print(t)
         self.tablonf(text)
 
         self.actualizar()
@@ -632,7 +636,7 @@ class vp ():
                     self.panel.configure(image=self.fotoAliado)
                 else:
                     
-                    self.fotoa=ImageTk.PhotoImage(Image.open(lista_personaje[0].jpg))
+                    self.fotoa=ImageTk.PhotoImage(Image.open(ruta_fotos+lista_personaje[0].jpg))
                     
                     self.panel.configure(image=self.fotoa)
                     
