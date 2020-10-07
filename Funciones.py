@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import Clases as c
 import pandas as pd
+import os
+from PIL import Image
 def pasar_turno(lista):
     """
     Pone el primer valor en el ultimo y todos los demas los mueve uno mas
@@ -198,7 +200,14 @@ def buscarnombreobjetivo(lista,name):
         if name == i.name:
             return p
         p+=1
-            
+def RedimensionarCarpetaFotos(direccion,dimension,direccion_destino):
+    
+    lista=os.listdir(direccion)
+    for i in lista:
+        img=Image.open(direccion+i)
+        new=img.resize((dimension,dimension))
+        new.save(direccion_destino+i,'png')
+    
 # def menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos):
     
 #     imprimirlista(lista_personajes)

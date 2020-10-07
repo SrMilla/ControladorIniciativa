@@ -17,11 +17,15 @@ for i in range(13):
     tipe_attack.append(df[1][i])
 for i in range (14):
     state2.append(df[2][i])
-dir="./TokensPeque/"
+dir="./Tokens/"
 p=os.listdir(dir)
 lista_nombres_npcs=[]
+print(p[303])
 for i in p:
-    lista_nombres_npcs.append(i.strip(".png"))
+    # lista_nombres_npcs.append(i.strip(".png"))
+        lista_nombres_npcs.append(i[:len(i)-4])
+
+print(lista_nombres_npcs[303])
 abc=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
 abcmin=[]
 dic_npc={}
