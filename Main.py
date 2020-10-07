@@ -9,8 +9,10 @@ Created on Tue Jul 28 01:10:10 2020
 from tkinter import *
 from tkinter import ttk
 from tkinter import scrolledtext
-
+# import tkFont
 # import tkinter as tk
+# from PIL import ImageTk, Image
+import tkinter.font as TkFont
 listan=[]
 from PIL import ImageTk, Image
 import PIL
@@ -25,6 +27,7 @@ lista_equipo=[]
 cl3=None
 target=None
 ruta_fotos="./imagenes/"
+ruta_tokens="./TokensPeque/"
 def resolver_ruta(ruta_relativa):
     if hasattr(sys, '_MEIPASS'):
         return os.path.join(sys._MEIPASS, ruta_relativa)
@@ -233,7 +236,40 @@ class vp ():
         self.listbox_estado_user.place(x=400,y=200)
         
      #################Tercera pestaña
-         
+        
+        self.combo_letra1 = ttk.Combobox(self.tab3,width=2)
+        self.combo_letra1.place(x=50,y=50)
+        self.combo_letra1['values']=dt.abc
+        self.combo_letra1.set("A")
+        self.combo_letra1.bind('<<ComboboxSelected>>',lambda event:self.mostrarMonster(self.combo_letra1,self.combo_npc1))
+        
+        self.combo_npc1 = ttk.Combobox(self.tab3)
+        self.combo_npc1.place(x=100,y=50)
+        self.combo_npc1['values']=dt.dic_npc["A"]
+        self.combo_npc1.set(dt.dic_npc["A"][0])
+        
+        # self.fotonpc1=ImageTk.PhotoImage(Image.open(ruta_tokens+dt.dic_npc["A"][0]+".png"))
+        # self.fotonpc1.place(x=50,y=70)
+        
+        
+        
+        # self.foto_npc1=Image.open(ruta_tokens+dt.dic_npc["A"][0]+".png")
+        # print(ruta_tokens+dt.dic_npc["A"][0]+".png")
+        # self.foto_npc1=self.foto_npc1.resize((300,300),Image.ANTIALIAS)
+        # self.image_npc1=ImageTk.PhotoImage(self.foto_npc1)
+        # self.image_npc1=Label(self.tab3,image=self.image_npc1)
+        # self.image_npc1.place(x=100,y=50)
+        # self.panel_npc1=Label(self.tab3, image = self.foto_npc1)
+        # self.foto_npc1.photo= self.foto_npc1
+        # self.panel_npc1.place(x=50,y=70)
+        # self.panel_npc1.size(w)
+        
+        self.foto_npc1=ImageTk.PhotoImage(Image.open(ruta_tokens+dt.dic_npc["A"][0]+".png"))
+        self.panel_npc1=Label(self.tab3,image=self.foto_npc1)
+        self.panel_npc1.place(x=50,y=70)
+                                     
+        
+        
         
         
         
@@ -255,7 +291,7 @@ class vp ():
         # scrollbar_personaje.pack(side = RIGHT, fill = Y)  
         
         self.listbox_personajes = Listbox(self.tab1, yscrollcommand = scrollbar_personaje.set,width=35,height=10,font = self.fuente)  
-        self.listbox_personajes.bind('<<ListboxSelect>>',lambda event:self.modificar_col3())
+        self.listbox_personajes.bind('<<ListboxSelect>>',self.modificar_col3)
         # self.listbox_personajes.grid(column=1, row=1)
         scrollbar_personaje.config(command=self.listbox_personajes.yview)
         self.listbox_personajes.place(x=60,y=150)
@@ -336,9 +372,14 @@ class vp ():
         
         
         # self.cargarequipo()
-        
+       
         
         self.pp.mainloop()
+    def mostrarMonster(self,combo,combo2):
+        t=combo.get()
+        combo2['values']=dt.dic_npc[t]
+        combo2.set(dt.dic_npc[t][0])
+        
     def ponerfotos3(self):
         global lista_equipo
         global target
