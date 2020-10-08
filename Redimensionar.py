@@ -10,6 +10,7 @@ import os
 import Funciones as f
 dir="./Tokens originales/"
 dir_save="./Tokens/"
+dir_medianos="./Tokens_Medianos/"
 # dir="./TokensPeque/"
 # lista=os.listdir(dir)
 # img=Image.open(dir+lista[0])
@@ -25,3 +26,4 @@ dir_save="./Tokens/"
 
 # img =Image.open()
 f.RedimensionarCarpetaFotos(dir,64,dir_save)
+f.RedimensionarCarpetaFotos(dir,128,dir_medianos)

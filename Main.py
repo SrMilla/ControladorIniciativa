@@ -28,6 +28,7 @@ cl3=None
 target=None
 ruta_fotos="./imagenes/"
 ruta_tokens="./Tokens/"
+ruta_tokens_M="./Tokens_Medianos/"
 def resolver_ruta(ruta_relativa):
     if hasattr(sys, '_MEIPASS'):
         return os.path.join(sys._MEIPASS, ruta_relativa)
@@ -241,8 +242,20 @@ class vp ():
         self.combo_npc=[]
         self.panel_npc=[]
         self.spin_npc=[]
+        self.Button_npc=[]
         posx=120
         posy=75
+        
+        # self.Button_npc.append(ttk.Button(self.tab3,text="Añadir",command=self.BotonNpc(self.combo_npc[0],self.spin_npc[0])))
+        # self.Button_npc.append(ttk.Button(self.tab3,text="Añadir",command=self.BotonNpc(self.combo_npc[1],self.spin_npc[1])))
+        # self.Button_npc.append(ttk.Button(self.tab3,text="Añadir",command=self.BotonNpc(self.combo_npc[2],self.spin_npc[2])))
+        # self.Button_npc.append(ttk.Button(self.tab3,text="Añadir",command=self.BotonNpc(self.combo_npc[3],self.spin_npc[3])))
+
+        
+        
+        
+        
+        
         for i in range (4):
             aux=ttk.Combobox(self.tab3,width=2)
             self.combo_letras.append(aux)
@@ -256,10 +269,7 @@ class vp ():
             self.combo_npc[i]['values']=dt.dic_npc["A"]
             self.combo_npc[i].set(dt.dic_npc["A"][0])
             
-            aux5=ttk.Spinbox(self.tab3,width=10,from_=0,to=999)
-            self.spin_npc.append(aux5)
-            self.spin_npc[i].place(x=posx+200,y=posy+i*70)
-            self.spin_npc[i].set(0)
+            
             
             aux3=ImageTk.PhotoImage(Image.open(ruta_tokens+dt.dic_npc["A"][0]+".png"))
             self.fotos_array.append(aux3)
@@ -269,12 +279,30 @@ class vp ():
             self.panel_npc.append(aux4)
             self.panel_npc[i].place(x=posx-70,y=posy-25+i*70)
             
+            aux5=ttk.Spinbox(self.tab3,width=5,from_=0,to=999,)
+            self.spin_npc.append(aux5)
+            self.spin_npc[i].place(x=posx+200,y=posy+i*70)
+            self.spin_npc[i].set(0)
             
+            aux6=Button(self.tab3,text="Añadir",command=self.BotonNpc(self.combo_npc[i],self.spin_npc[i]))
+            self.Button_npc.append(ttk.Button(self.tab3,text="Añadir"))
+            # self.Button_npc.append(aux6)
+            self.Button_npc[i].place(x=posx+250,y=posy-5+i*70)
             # self.combo_letras[i].bind('<<ComboboxSelected>>',lambda event:self.mostrarDicNpc(self.combo_letras[i],self.combo_npc[i], i, self.panel_npc[i]))
             # self.combo_npc[i].bind('<<ComboboxSelected>>',lambda event:self.mostrarFotoNpc(self.combo_npc[i],i, self.panel_npc[i]))
             
-            
-            
+            # self.Button_npc[i].place(x=posx+250,y=posy-5+i*70)
+        # self.Button_npc1=Button(self.tab3,text="Añadir",command=lambda: self.BotonNpc(self.combo_npc[i],self.spin_npc[i]))
+        # self.Button_npc1.place(x=500,y=50)
+        self.Button_npc[0].configure(command=lambda:self.BotonNpc(self.combo_npc[0],self.spin_npc[0]))
+        self.Button_npc[1].configure(command=lambda:self.BotonNpc(self.combo_npc[1],self.spin_npc[1]))
+        self.Button_npc[2].configure(command=lambda:self.BotonNpc(self.combo_npc[2],self.spin_npc[2]))
+        self.Button_npc[3].configure(command=lambda:self.BotonNpc(self.combo_npc[3],self.spin_npc[3]))
+
+        
+        
+        
+        
         
         self.combo_letras[0].bind('<<ComboboxSelected>>',lambda event:self.mostrarDicNpc(self.combo_letras[0],self.combo_npc[0], 0, self.panel_npc[0]))
         self.combo_npc[0].bind('<<ComboboxSelected>>',lambda event:self.mostrarFotoNpc(self.combo_npc[0],0, self.panel_npc[0]))
@@ -418,6 +446,15 @@ class vp ():
        
         
         self.pp.mainloop()
+    def BotonNpc(self,combo2,spin):
+        #solo enemigos
+        global lista_personaje
+        ini=int(spin.get())
+        print("Iniciativa:"+str(ini))
+        print("Nombre:"+combo2.get())
+        if ini>0:
+            p=c.enemigo(ini,combo2.get(),0)
+            lista_personaje.append(p)
     def mostrarDicNpc(self,combo,combo2,fotaca,panel):
         t=combo.get()
         combo2['values']=dt.dic_npc[t]
@@ -457,14 +494,26 @@ class vp ():
         t=f.buscarnombreobjetivo(lista_personaje,target)
         print("rrr"+str(t))
         # t=lista_personaje[t]
-        if lista_personaje[t].jpg=="None":
-            if lista_personaje[t].tipo==0:
+        # if lista_personaje[t].jpg=="None":
+        #     if lista_personaje[t].tipo==0:
+        #         self.panel2.configure(image=self.fotoAliado)
+        #     else:
+        #         self.panel2.configure(image=self.fotoEnemigo)
+        # else:
+        #     self.fotob=ImageTk.PhotoImage(Image.open(ruta_tokens_M+lista_personaje[t].name+".png"))
+        #     self.panel2.configure(image=self.fotob)
+        t=lista_personaje[t]
+        foto_turno=ruta_tokens_M+t.name+".png"
+        if os.path.isfile(foto_turno):
+            self.fotob=ImageTk.PhotoImage(Image.open(foto_turno))
+            self.panel2.configure(image=self.fotob)
+        else:
+            if lista_personaje[0].tipo==0:
                 self.panel2.configure(image=self.fotoAliado)
+                
             else:
                 self.panel2.configure(image=self.fotoEnemigo)
-        else:
-            self.fotob=ImageTk.PhotoImage(Image.open(ruta_fotos+lista_personaje[t].name+".png"))
-            self.panel2.configure(image=self.fotob)
+                
     def tablondañof(self):
         
         # damage=tk.StringVar()
@@ -746,7 +795,7 @@ class vp ():
                 self.listbox_personajes.insert(END,t)
                 self.listbox_personajes.itemconfigure(n,bg="#ff0000", fg="#fff")
             n+=1
-        foto_turno=ruta_fotos+lista_personaje[0].name+".png"
+        foto_turno=ruta_tokens_M+lista_personaje[0].name+".png"
         print(foto_turno)
         if os.path.isfile(foto_turno):
             self.fotoa=ImageTk.PhotoImage(Image.open(foto_turno))
