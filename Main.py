@@ -237,21 +237,78 @@ class vp ():
         
      #################Tercera pestaña
         self.fotos_array=[]
-        self.combo_letra1 = ttk.Combobox(self.tab3,width=2)
-        self.combo_letra1.place(x=120,y=75)
-        self.combo_letra1['values']=dt.abc
-        self.combo_letra1.set("A")
-        self.combo_letra1.bind('<<ComboboxSelected>>',lambda event:self.mostrarDicNpc(self.combo_letra1,self.combo_npc1, 0, self.panel_npc1))
-        self.fotos_array.append(ImageTk.PhotoImage(Image.open(ruta_tokens+dt.dic_npc["A"][0]+".png")))
+        self.combo_letras=[]
+        self.combo_npc=[]
+        self.panel_npc=[]
+        self.spin_npc=[]
+        posx=120
+        posy=75
+        for i in range (4):
+            aux=ttk.Combobox(self.tab3,width=2)
+            self.combo_letras.append(aux)
+            self.combo_letras[i].place(x=posx,y=posy+i*70)
+            self.combo_letras[i]['values']=dt.abc
+            self.combo_letras[i].set("A")
+            
+            aux2= ttk.Combobox(self.tab3)
+            self.combo_npc.append(aux2)
+            self.combo_npc[i].place(x=posx+50,y=posy+i*70)
+            self.combo_npc[i]['values']=dt.dic_npc["A"]
+            self.combo_npc[i].set(dt.dic_npc["A"][0])
+            
+            aux5=ttk.Spinbox(self.tab3,width=10,from_=0,to=999)
+            self.spin_npc.append(aux5)
+            self.spin_npc[i].place(x=posx+200,y=posy+i*70)
+            self.spin_npc[i].set(0)
+            
+            aux3=ImageTk.PhotoImage(Image.open(ruta_tokens+dt.dic_npc["A"][0]+".png"))
+            self.fotos_array.append(aux3)
+            # self.fotos_array[i]=
+            
+            aux4=Label(self.tab3,image=self.fotos_array[i])
+            self.panel_npc.append(aux4)
+            self.panel_npc[i].place(x=posx-70,y=posy-25+i*70)
+            
+            
+            # self.combo_letras[i].bind('<<ComboboxSelected>>',lambda event:self.mostrarDicNpc(self.combo_letras[i],self.combo_npc[i], i, self.panel_npc[i]))
+            # self.combo_npc[i].bind('<<ComboboxSelected>>',lambda event:self.mostrarFotoNpc(self.combo_npc[i],i, self.panel_npc[i]))
+            
+            
+            
+        
+        self.combo_letras[0].bind('<<ComboboxSelected>>',lambda event:self.mostrarDicNpc(self.combo_letras[0],self.combo_npc[0], 0, self.panel_npc[0]))
+        self.combo_npc[0].bind('<<ComboboxSelected>>',lambda event:self.mostrarFotoNpc(self.combo_npc[0],0, self.panel_npc[0]))
+        
+        self.combo_letras[1].bind('<<ComboboxSelected>>',lambda event:self.mostrarDicNpc(self.combo_letras[1],self.combo_npc[1], 1, self.panel_npc[1]))
+        self.combo_npc[1].bind('<<ComboboxSelected>>',lambda event:self.mostrarFotoNpc(self.combo_npc[1],1, self.panel_npc[1]))  
+        
+        self.combo_letras[2].bind('<<ComboboxSelected>>',lambda event:self.mostrarDicNpc(self.combo_letras[2],self.combo_npc[2], 2, self.panel_npc[2]))
+        self.combo_npc[2].bind('<<ComboboxSelected>>',lambda event:self.mostrarFotoNpc(self.combo_npc[2],2, self.panel_npc[2]))  
+         
+        self.combo_letras[3].bind('<<ComboboxSelected>>',lambda event:self.mostrarDicNpc(self.combo_letras[3],self.combo_npc[3], 3, self.panel_npc[3]))
+        self.combo_npc[3].bind('<<ComboboxSelected>>',lambda event:self.mostrarFotoNpc(self.combo_npc[3],3, self.panel_npc[3]))  
+        
+        # self.combo_letras[0].bind('<<ComboboxSelected>>',lambda event:self.mostrarDicNpc(self.combo_letras[0],self.combo_npc[0], 0, self.panel_npc[0]))
+        # self.combo_npc[0].bind('<<ComboboxSelected>>',lambda event:self.mostrarFotoNpc(self.combo_npc[0], 0, self.panel_npc[0]))   
+        
+        
+        # self.combo_letra1 = ttk.Combobox(self.tab3,width=2)
+        # self.combo_letra1.place(x=120,y=75)
+        # self.combo_letra1['values']=dt.abc
+        # self.combo_letra1.set("A")
+        # self.combo_letra1.bind('<<ComboboxSelected>>',lambda event:self.mostrarDicNpc(self.combo_letra1,self.combo_npc1, 0, self.panel_npc1))
+        
+        
+        # self.fotos_array.append(ImageTk.PhotoImage(Image.open(ruta_tokens+dt.dic_npc["A"][0]+".png")))
 
-        # self.foto_npc1=ImageTk.PhotoImage(Image.open(ruta_tokens+dt.dic_npc["A"][0]+".png"))
-        self.panel_npc1=Label(self.tab3,image=self.fotos_array[0])
-        self.panel_npc1.place(x=50,y=50)
-        self.combo_npc1 = ttk.Combobox(self.tab3)
-        self.combo_npc1.place(x=170,y=75)
-        self.combo_npc1['values']=dt.dic_npc["A"]
-        self.combo_npc1.set(dt.dic_npc["A"][0])
-        self.combo_npc1.bind('<<ComboboxSelected>>',lambda event:self.mostrarFotoNpc(self.combo_npc1, 0, self.panel_npc1)) 
+        # # self.foto_npc1=ImageTk.PhotoImage(Image.open(ruta_tokens+dt.dic_npc["A"][0]+".png"))
+        # self.panel_npc1=Label(self.tab3,image=self.fotos_array[0])
+        # self.panel_npc1.place(x=50,y=50)
+        # self.combo_npc1 = ttk.Combobox(self.tab3)
+        # self.combo_npc1.place(x=170,y=75)
+        # self.combo_npc1['values']=dt.dic_npc["A"]
+        # self.combo_npc1.set(dt.dic_npc["A"][0])
+        # self.combo_npc1.bind('<<ComboboxSelected>>',lambda event:self.mostrarFotoNpc(self.combo_npc1, 0, self.panel_npc1)) 
         
                                      
         
