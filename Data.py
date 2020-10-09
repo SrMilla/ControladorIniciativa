@@ -20,12 +20,12 @@ for i in range (14):
 dir="./Tokens/"
 p=os.listdir(dir)
 lista_nombres_npcs=[]
-print(p[303])
+# print(p[303])
 for i in p:
     # lista_nombres_npcs.append(i.strip(".png"))
         lista_nombres_npcs.append(i[:len(i)-4])
 
-print(lista_nombres_npcs[303])
+# print(lista_nombres_npcs[303])
 abc=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
 abcmin=[]
 dic_npc={}
@@ -35,6 +35,7 @@ for i in abc:
         if j.startswith(i):
             # print(j+"empieza por"+i)
             dic_npc[i].append(j)
+p="t"+""+"r"
 # print(dic_npc[1])
 # abc=["A","B","C","D","E","F","G","H","I","J","K","L","M","N","Ñ","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
 # print(p[0].strip(".png"))

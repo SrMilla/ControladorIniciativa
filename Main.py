@@ -26,6 +26,7 @@ lista_personaje=[]
 lista_equipo=[]
 cl3=None
 target=None
+taget_rep=None
 ruta_fotos="./imagenes/"
 ruta_tokens="./Tokens/"
 ruta_tokens_M="./Tokens_Medianos/"
@@ -450,11 +451,13 @@ class vp ():
         #solo enemigos
         global lista_personaje
         ini=int(spin.get())
-        print("Iniciativa:"+str(ini))
-        print("Nombre:"+combo2.get())
+        # print("Iniciativa:"+str(ini))
+        # print("Nombre:"+combo2.get())
         if ini>0:
             p=c.enemigo(ini,combo2.get(),0)
+            p.repe(lista_personaje)
             lista_personaje.append(p)
+            self.actualizar()
     def mostrarDicNpc(self,combo,combo2,fotaca,panel):
         t=combo.get()
         combo2['values']=dt.dic_npc[t]
@@ -479,10 +482,10 @@ class vp ():
 
         """
         t=combo.get()
-        print(t)
+        # print(t)
         k=Image.open(ruta_tokens+t+".png")
         # k.show()
-        print(fotaca)
+        # print(fotaca)
         self.fotos_array[fotaca]=ImageTk.PhotoImage(k)
         # foto.show()
         panel.configure(image=self.fotos_array[fotaca])
@@ -490,8 +493,10 @@ class vp ():
     def ponerfotos3(self):
         global lista_equipo
         global target
+        global target_rep
+
         print(target)
-        t=f.buscarnombreobjetivo(lista_personaje,target)
+        t=f.buscarnombreobjetivo(lista_personaje,target,target_rep)
         print("rrr"+str(t))
         # t=lista_personaje[t]
         # if lista_personaje[t].jpg=="None":
@@ -520,11 +525,14 @@ class vp ():
         
         global target
         global lista_personaje
+        global target_rep
+
         print(target)
         if target ==None:
             target=lista_personaje[0].name
+            target_rep=lista_personaje[0].rep
         print("el daño:"+str(target))
-        o=f.buscarnombreobjetivo(lista_personaje,target)
+        o=f.buscarnombreobjetivo(lista_personaje,target,target_rep)
         print(o)
         o=lista_personaje[int(o)]
         p=0
@@ -537,7 +545,9 @@ class vp ():
     def tablonestadoobjetivo(self):
         global target
         global lista_personaje
-        o=f.buscarnombreobjetivo(lista_personaje,target)
+        global target_rep
+
+        o=f.buscarnombreobjetivo(lista_personaje,target,target_rep)
         self.listbox_estado.delete(0,END)
         p=0
         for i in lista_personaje[o].altered:
@@ -553,9 +563,10 @@ class vp ():
     def altered(self):
         global target
         global lista_personaje
+        global target_rep
         a=self.combo_altered.get()
         print(a)
-        t=f.buscarnombreobjetivo(lista_personaje,target)
+        t=f.buscarnombreobjetivo(lista_personaje,target,target_rep)
         lista_personaje[t].altered.append(a)
         self.tablonestadoobjetivo()
 
@@ -596,10 +607,11 @@ class vp ():
     def modificar_col3(self):
         # self.tablondaño.delete('1.0', END)
         global target
+        global target_rep
         print(target)
         target=self.listbox_personajes.curselection()[0]
         target=lista_personaje[target]
-        self.lap3.configure(text=target.name)
+        self.lap3.configure(text=target.name+"_"+target.rep)
         if int(target.tipo)==0:
             # texto+=str(target.vida)
             self.lap4.configure(text=target.vida)
@@ -622,8 +634,9 @@ class vp ():
         #     #     texto=i+":"+str(target.type_damage[i])
         #     else:
         #         self.tablondañof(i+":"+str(target.type_damage[i]))
-
+        target_rep=target.rep
         target=target.name
+        
         self.tablondañof()
         self.ponerfotos3()
         self.tablonestadoobjetivo()
@@ -764,10 +777,10 @@ class vp ():
 
         """
         global lista_personaje
-        text=(lista_personaje[0].name+" ha terminado su turno")
+        text=(lista_personaje[0].name+"_"+lista_personaje[0].rep+ "ha terminado su turno")
         self.tablonf(text)
         f.pasar_turno(lista_personaje)#se carga
-        text="Es el turno de "+lista_personaje[0].name
+        text="Es el turno de "+lista_personaje[0].name+"_"+lista_personaje[0].rep
        
         self.tablonf(text)
 
@@ -786,17 +799,16 @@ class vp ():
         n=0
         for i in lista_personaje:
             if(i.tipo==0):
-                t=i.name+'     PS:'+str(i.vida)
+                t=i.name+"_"+i.rep+'     PS:'+str(i.vida)
                 self.listbox_personajes.insert(END,t)
                 self.listbox_personajes.itemconfigure(n,bg="#00aa00", fg="#fff")
 
             else:
-                t=i.name+'     DR:'+str(i.danoacumulado)
+                t=i.name+"_"+i.rep+'     DR:'+str(i.danoacumulado)
                 self.listbox_personajes.insert(END,t)
                 self.listbox_personajes.itemconfigure(n,bg="#ff0000", fg="#fff")
             n+=1
         foto_turno=ruta_tokens_M+lista_personaje[0].name+".png"
-        print(foto_turno)
         if os.path.isfile(foto_turno):
             self.fotoa=ImageTk.PhotoImage(Image.open(foto_turno))
             self.panel.configure(image=self.fotoa)
@@ -833,7 +845,9 @@ class vp ():
     def curar(self):
         global lista_personaje
         global target
-        w=f.buscarnombreobjetivo(lista_personaje,target)
+        global target_rep
+
+        w=f.buscarnombreobjetivo(lista_personaje,target,target_rep)
 
         # w=self.listbox_personajes.curselection()
         # w=w[0]
@@ -850,7 +864,10 @@ class vp ():
         
     def danar(self):
         global lista_personaje
-        w=f.buscarnombreobjetivo(lista_personaje,target)
+        global target_rep
+        global target
+
+        w=f.buscarnombreobjetivo(lista_personaje,target,target_rep)
         # w=w[0]
         lista_personaje[w].atacar(int(self.spinPs.get()))
         text=lista_personaje[w].name+" ha recibido "+self.spinPs.get()+" de daño por parte de "+lista_personaje[0].name
@@ -860,13 +877,15 @@ class vp ():
     def danartipo(self):
         global lista_personaje
         global target
+        global target_rep
+
         t=self.combo.get()
         # print(t)
         # w=self.listbox_personajes.curselection()
         # print(w)
-        print(target)
-        w=f.buscarnombreobjetivo(lista_personaje,target)
-        print(w)
+        # print(target)
+        w=f.buscarnombreobjetivo(lista_personaje,target,target_rep)
+        # print(w)
         # w=w[0]
         lista_personaje[w].type_damage[t]+=int(self.spinPs.get())
         lista_personaje[w].atacar(int(self.spinPs.get()))
