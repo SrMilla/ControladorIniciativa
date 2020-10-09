@@ -262,39 +262,25 @@ class vp ():
             self.combo_letras.append(aux)
             self.combo_letras[i].place(x=posx,y=posy+i*70)
             self.combo_letras[i]['values']=dt.abc
-            self.combo_letras[i].set("A")
-            
+            self.combo_letras[i].set("A")            
             aux2= ttk.Combobox(self.tab3)
             self.combo_npc.append(aux2)
             self.combo_npc[i].place(x=posx+50,y=posy+i*70)
             self.combo_npc[i]['values']=dt.dic_npc["A"]
             self.combo_npc[i].set(dt.dic_npc["A"][0])
-            
-            
-            
             aux3=ImageTk.PhotoImage(Image.open(ruta_tokens+dt.dic_npc["A"][0]+".png"))
             self.fotos_array.append(aux3)
-            # self.fotos_array[i]=
-            
+            # self.fotos_array[i]=            
             aux4=Label(self.tab3,image=self.fotos_array[i])
             self.panel_npc.append(aux4)
             self.panel_npc[i].place(x=posx-70,y=posy-25+i*70)
-            
             aux5=ttk.Spinbox(self.tab3,width=5,from_=0,to=999,)
             self.spin_npc.append(aux5)
             self.spin_npc[i].place(x=posx+200,y=posy+i*70)
             self.spin_npc[i].set(0)
-            
             aux6=Button(self.tab3,text="Añadir",command=self.BotonNpc(self.combo_npc[i],self.spin_npc[i]))
             self.Button_npc.append(ttk.Button(self.tab3,text="Añadir"))
-            # self.Button_npc.append(aux6)
             self.Button_npc[i].place(x=posx+250,y=posy-5+i*70)
-            # self.combo_letras[i].bind('<<ComboboxSelected>>',lambda event:self.mostrarDicNpc(self.combo_letras[i],self.combo_npc[i], i, self.panel_npc[i]))
-            # self.combo_npc[i].bind('<<ComboboxSelected>>',lambda event:self.mostrarFotoNpc(self.combo_npc[i],i, self.panel_npc[i]))
-            
-            # self.Button_npc[i].place(x=posx+250,y=posy-5+i*70)
-        # self.Button_npc1=Button(self.tab3,text="Añadir",command=lambda: self.BotonNpc(self.combo_npc[i],self.spin_npc[i]))
-        # self.Button_npc1.place(x=500,y=50)
         self.Button_npc[0].configure(command=lambda:self.BotonNpc(self.combo_npc[0],self.spin_npc[0]))
         self.Button_npc[1].configure(command=lambda:self.BotonNpc(self.combo_npc[1],self.spin_npc[1]))
         self.Button_npc[2].configure(command=lambda:self.BotonNpc(self.combo_npc[2],self.spin_npc[2]))
@@ -491,22 +477,21 @@ class vp ():
         panel.configure(image=self.fotos_array[fotaca])
         
     def ponerfotos3(self):
+        """
+        Esta funcion permite poner la foto del png en la tercera columna
+
+        Returns
+        -------
+        None.
+
+        """
         global lista_equipo
         global target
         global target_rep
 
-        print(target)
+        # print(target)
         t=f.buscarnombreobjetivo(lista_personaje,target,target_rep)
-        print("rrr"+str(t))
-        # t=lista_personaje[t]
-        # if lista_personaje[t].jpg=="None":
-        #     if lista_personaje[t].tipo==0:
-        #         self.panel2.configure(image=self.fotoAliado)
-        #     else:
-        #         self.panel2.configure(image=self.fotoEnemigo)
-        # else:
-        #     self.fotob=ImageTk.PhotoImage(Image.open(ruta_tokens_M+lista_personaje[t].name+".png"))
-        #     self.panel2.configure(image=self.fotob)
+        # print("rrr"+str(t))
         t=lista_personaje[t]
         foto_turno=ruta_tokens_M+t.name+".png"
         if os.path.isfile(foto_turno):
@@ -521,7 +506,6 @@ class vp ():
                 
     def tablondañof(self):
         
-        # damage=tk.StringVar()
         
         global target
         global lista_personaje
@@ -569,26 +553,9 @@ class vp ():
         t=f.buscarnombreobjetivo(lista_personaje,target,target_rep)
         lista_personaje[t].altered.append(a)
         self.tablonestadoobjetivo()
-
-    # def vaciarenemigo(self):
-    #     self.tablondaño.config(state='normal')
-    #     # self.tablondaño.insert(END,"\n")
-    #     self.tablondaño.delete(0, end)
-    
-        
-    #     # self.tablondaño.yview(END)
-    #     self.tablondaño.config(state='disable')
     def actualizar_col3(self):
-        # self.tablondañof()
-        # self.tablondaño.delete('1.0', END)
-        
-        # self.vaciarenemigo()
         global target
         global lista_personaje
-        
-        # target=self.listbox_personajes.curselection()[0]
-        # print(target)
-        # target=lista_personaje[target]
         self.lap3.configure(text=target.name)
         texto=""
         #Se pone la vida
@@ -598,14 +565,9 @@ class vp ():
         else:
             texto+=str(target.danoacumulado)
             self.lap4.configure(text=target.danoacumulado)
-        #pone l
-        # for i in dt.tipe_attack:
-        #     if 0<target.type_damage[i]:
-        #         self.tablondañof(i+":"+str(target.type_damage[i]))
-
+     
     
     def modificar_col3(self):
-        # self.tablondaño.delete('1.0', END)
         global target
         global target_rep
         print(target)
@@ -613,38 +575,18 @@ class vp ():
         target=lista_personaje[target]
         self.lap3.configure(text=target.name+"_"+target.rep)
         if int(target.tipo)==0:
-            # texto+=str(target.vida)
             self.lap4.configure(text=target.vida)
         else:
-            # texto+=str(target.danoacumulado)
             self.lap4.configure(text=target.danoacumulado)
         texto=""
-        # if int(target.tipo)==0:
-        #     texto+=str(target.vida)
-        #     self.lap4.configure(text=target.vida)
-        # else:
-        #     texto+=str(target.danoacumulado)
-        #     self.lap4.configure(text=target.danoacumulado)
-        
-        # self.tablondaño.delete(1.0, END)
-        # for i in dt.tipe_attack:
-        #     print(i+str(target.type_damage[i]))
-        #     if 0==target.type_damage[i]:
-        #         print("r")
-        #     #     texto=i+":"+str(target.type_damage[i])
-        #     else:
-        #         self.tablondañof(i+":"+str(target.type_damage[i]))
+       
         target_rep=target.rep
         target=target.name
         
         self.tablondañof()
         self.ponerfotos3()
         self.tablonestadoobjetivo()
-        # print(texto)
-        # self.tablondañof(texto)
-        
-        
-        # print(target.name)
+
     
     def cargarequipo(self):
         """
