@@ -149,6 +149,8 @@ class vp ():
         self.botonPasarturno = ttk.Button(self.tab1,text="Siguiente turno:",command=self.PasarTurno)
         # self.botonPasarturno.grid(column=0,row=1)
         self.botonPasarturno.place(x=400,y=160)
+        
+        
         # self.botonPasarturno.grid(column=9,row=2)
         # self.botonEliminarPersonaje.place(x=400,y=200)
        
@@ -237,6 +239,8 @@ class vp ():
         self.listbox_estado_user = Listbox(self.tab1)
         self.listbox_estado_user.place(x=400,y=200)
         
+        self.boton_quitar_estado=Button(self.tab1,text="Quitar estado",command=self.QuitarEstado)
+        self.boton_quitar_estado.place(x=1100,y=340)
      #################Tercera pestaña
         self.fotos_array=[]
         self.combo_letras=[]
@@ -433,6 +437,18 @@ class vp ():
        
         
         self.pp.mainloop()
+    def QuitarEstado(self):
+        global lista_personaje
+        global target
+        global target_rep
+        Estado=self.listbox_estado.curselection()
+        print(Estado)
+        Estado=Estado[0]
+        Objetivo=f.buscarnombreobjetivo(lista_personaje,target,target_rep)
+        Estado=lista_personaje[Objetivo].altered[Estado]
+
+        lista_personaje[Objetivo].altered.remove(Estado)
+        self.tablonestadoobjetivo()
     def BotonNpc(self,combo2,spin):
         #solo enemigos
         global lista_personaje

@@ -11,12 +11,12 @@ df = pd.read_excel("ESTADOS.xlsx", header= None)
 state1=[]
 state2=[]
 tipe_attack=[]
-for i in range(10):
+for i in range(24):
     state1.append(df[0][i])
 for i in range(13):
     tipe_attack.append(df[1][i])
-for i in range (14):
-    state2.append(df[2][i])
+# for i in range (14):
+#     state2.append(df[2][i])
 dir="./Tokens/"
 p=os.listdir(dir)
 lista_nombres_npcs=[]
