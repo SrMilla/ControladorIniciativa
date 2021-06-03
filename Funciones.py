@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 import Clases as c
 import pandas as pd
+import os
+from PIL import Image
 def pasar_turno(lista):
     """
     Pone el primer valor en el ultimo y todos los demas los mueve uno mas
@@ -192,12 +194,39 @@ def cargarequipo(lista):
 
             # p2.danoacumulado=ps[i]
         lista.append(p1)
-def buscarnombreobjetivo(lista,name):
+def buscarnombreobjetivo(lista,name,rep):
+    # HAY QUE PONER PARA ENCUENTRE LA REPETICCION PARA ELLO SOLO DEBEMOS AÑADIR UN AND EN EL IF Y GUARDAR LA REP DEL OBJETIVO EN EL CODIGO PRINCIPAL
     p=0
     for i in lista:
-        if name == i.name:
+        if name == i.name and rep==i.rep:
             return p
         p+=1
+def RedimensionarCarpetaFotos(direccion,dimension,direccion_destino):
+    
+    lista=os.listdir(direccion)
+    for i in lista:
+        img=Image.open(direccion+i)
+        new=img.resize((dimension,dimension))
+        new.save(direccion_destino+i,'png')
+def saberRepeticion(lista,nombre):
+    repe=True
+    lista_nombres=[]
+    aux=nombre
+    aux2=aux
+    y=0
+    for i in lista:
+        lista_nombres.append(i.name+i.rep)
+        print(i.name+i.rep)
+    while repe:
+        if aux2 in lista_nombres:
+            y=1+y
+            aux2=aux+str(y)
+        else:
+            repe=False
+    if y==0:
+        return ""
+    return str(y)
+            
             
 # def menu(lista_personajes,lista_de_iniciativa,lista_aliados,lista_enemigos):
     
